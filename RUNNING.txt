@@ -1,0 +1,27 @@
+﻿本地运行说明
+
+已安装：backend/.venv 独立 Python 3.11 环境、frontend/node_modules 前端依赖。
+启动：双击 start-local.cmd，或在本目录执行 .\start-local.cmd。
+停止：双击 stop-local.cmd，或执行 .\stop-local.cmd。
+服务在后台运行。关闭终端或网页不会停止服务，停止请用停止脚本。
+启动脚本不会自动打开浏览器，请访问 http://127.0.0.1:5174/。
+接口文档：http://127.0.0.1:8000/docs
+健康检查：http://127.0.0.1:8000/healthz
+日志：.runtime/backend.err.log、backend.out.log、frontend.err.log、frontend.out.log。
+
+当前没有配置模型服务。前端和后端可以启动，真实的任务规划、总结、报告生成暂不可用。
+要接入兼容 OpenAI 协议的模型：编辑 backend/.env，填写 LLM_MODEL_ID、LLM_API_KEY、LLM_BASE_URL，并保持 LLM_PROVIDER=custom。保存后停止再启动服务。
+API Key 只存本地 .env，不要上传或提交到仓库。
+DuckDuckGo 搜索不需要 API Key，但实际访问取决于网络；本次未验证真实联网研究。
+
+依赖说明：原始 uv.lock 锁定 hello-agents 0.2.8，而 pyproject.toml 指定 0.2.9。
+本地使用 0.2.9，并补充该版本导入时需要的 huggingface-hub。
+backend/requirements.local.txt 保存实际安装版本，不要直接用旧 uv.lock 覆盖环境。
+没有修改原项目业务源码。
+
+重建环境（在本目录的 PowerShell 中执行，需要 Python 3.11 和 Node.js）：
+python -m venv backend/.venv
+.\backend\.venv\Scripts\python.exe -m pip install -r backend/requirements.local.txt
+npm.cmd --prefix frontend ci
+
+前端检查：npm.cmd --prefix frontend run build

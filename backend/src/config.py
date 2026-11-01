@@ -86,6 +86,7 @@ class Configuration(BaseModel):
         title="LLM Base URL",
         description="Optional base URL when using custom OpenAI-compatible services",
     )
+    llm_timeout: float = Field(default=120, ge=1, le=600)
     llm_max_tokens: int = Field(
         default=8192, ge=1,
         description="Maximum model output tokens, including reasoning where applicable",

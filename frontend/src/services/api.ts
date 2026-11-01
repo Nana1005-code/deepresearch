@@ -3,6 +3,7 @@ const baseURL =
 
 export interface ResearchRequest {
   topic: string;
+  model_profile_id?: string;
   search_api?: string;
 }
 
@@ -93,4 +94,29 @@ export async function runResearchStream(
       break;
     }
   }
+}
+
+export interface ModelProfile {
+  id: string; name: string; base_url: string; model_id: string;
+  has_api_key: boolean; max_tokens: number; timeout: number;
+}
+export async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const response = await fetch(`${baseURL}${path}`, { ...options, headers: { "Content-Type": "application/json", ...options.headers } });
+  const data = await response.json().catch(() => null);
+  if (!response.ok) {
+    const detail = data?.detail;
+    throw new Error(typeof detail === "string" ? detail : Array.isArray(detail) ? detail.map((e: {msg: string}) => e.msg).join("；") : `请求失败 (${response.status})`);
+  }
+  return data as T;
+}
+
+export interface ResearchRun {
+  id: string; revision?:number; title: string; topic: string; status: string; created_at: string;
+  updated_at: string; ended_at?: string; error: string | null;
+  search_api: string; profile: ModelProfile | null;
+  timings?: Record<string, number>; timing_active?: Record<string, boolean>;
+}
+export interface RunDetail {
+  record: ResearchRun; events: {seq: number; event: ResearchStreamEvent}[];
+  next_cursor: number; has_more: boolean;
 }

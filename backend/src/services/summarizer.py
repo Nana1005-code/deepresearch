@@ -9,9 +9,8 @@ from hello_agents import ToolAwareSimpleAgent
 
 from models import SummaryState, TodoItem
 from config import Configuration
-from utils import strip_thinking_tokens
 from services.notes import build_note_guidance
-from services.text_processing import strip_tool_calls
+from services.text_processing import public_answer
 from services.llm import require_text
 
 
@@ -37,78 +36,26 @@ class SummarizationService:
         finally:
             agent.clear_history()
 
-        summary_text = (response or "").strip()
-        if self._config.strip_thinking_tokens:
-            summary_text = strip_thinking_tokens(summary_text)
-
-        summary_text = strip_tool_calls(summary_text).strip()
-
-        return require_text(summary_text, "任务总结")
+        return require_text(public_answer(response or "", "summary"), "任务总结")
 
     def stream_task_summary(
         self, state: SummaryState, task: TodoItem, context: str
     ) -> Tuple[Iterator[str], Callable[[], str]]:
-        """Stream the summary text for a task while collecting full output."""
+        """Keep tool rounds private and publish only the validated final answer.
 
-        prompt = self._build_prompt(state, task, context)
-        remove_thinking = self._config.strip_thinking_tokens
-        raw_buffer = ""
-        visible_output = ""
-        emit_index = 0
-        agent = self._agent_factory()
-
-        def flush_visible() -> Iterator[str]:
-            nonlocal emit_index, raw_buffer
-            while True:
-                start = raw_buffer.find("<think>", emit_index)
-                if start == -1:
-                    if emit_index < len(raw_buffer):
-                        segment = raw_buffer[emit_index:]
-                        emit_index = len(raw_buffer)
-                        if segment:
-                            yield segment
-                    break
-
-                if start > emit_index:
-                    segment = raw_buffer[emit_index:start]
-                    emit_index = start
-                    if segment:
-                        yield segment
-
-                end = raw_buffer.find("</think>", start)
-                if end == -1:
-                    break
-                emit_index = end + len("</think>")
+        ToolAwareSimpleAgent.stream_run yields narration from every tool round.
+        Its run method returns only the final round, while retaining tool callbacks.
+        Progress and tool records still flow through the existing event tracker.
+        """
+        summary = ""
 
         def generator() -> Iterator[str]:
-            nonlocal raw_buffer, visible_output, emit_index
-            try:
-                for chunk in agent.stream_run(prompt):
-                    raw_buffer += chunk
-                    if remove_thinking:
-                        for segment in flush_visible():
-                            visible_output += segment
-                            if segment:
-                                yield segment
-                    else:
-                        visible_output += chunk
-                        if chunk:
-                            yield chunk
-            finally:
-                if remove_thinking:
-                    for segment in flush_visible():
-                        visible_output += segment
-                        if segment:
-                            yield segment
-                agent.clear_history()
+            nonlocal summary
+            summary = self.summarize_task(state, task, context)
+            yield summary
 
         def get_summary() -> str:
-            if remove_thinking:
-                cleaned = strip_thinking_tokens(visible_output)
-            else:
-                cleaned = visible_output
-
-            return require_text(strip_tool_calls(cleaned).strip(), "任务总结")
+            return require_text(summary, "任务总结")
 
         return generator(), get_summary
 
@@ -122,5 +69,5 @@ class SummarizationService:
             f"检索查询：{task.query}\n"
             f"任务上下文：\n{context}\n"
             f"{build_note_guidance(task)}\n"
-            "请按照以上协作要求先同步笔记，然后返回一份面向用户的 Markdown 总结（仍遵循任务总结模板）。"
+            "请先完成笔记同步，最终回复只输出 <final_answer> 与 </final_answer> 包裹的正式 Markdown 总结，以 # 任务总结 开头。不得包含推理过程、工作计划、工具参数或笔记原始 JSON。"
         )

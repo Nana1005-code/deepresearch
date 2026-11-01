@@ -15,6 +15,9 @@ from pydantic import BaseModel, Field
 from services.llm import ModelOutputError
 from config import Configuration, SearchAPI
 from agent import DeepResearchAgent
+from storage import Store
+from research_jobs import ResearchJobs, router as research_router
+from profile_api import router as profile_router, resolve_config
 
 # 添加控制台日志处理程序
 logger.add(
@@ -37,7 +40,8 @@ logger.add(
 class ResearchRequest(BaseModel):
     """Payload for triggering a research run."""
 
-    topic: str = Field(..., description="Research topic supplied by the user")
+    model_profile_id: str | None = None
+    topic: str = Field(..., min_length=1, max_length=2000, description="Research topic supplied by the user")
     search_api: SearchAPI | None = Field(
         default=None,
         description="Override the default search backend configured via env",
@@ -78,10 +82,20 @@ def _build_config(payload: ResearchRequest) -> Configuration:
 
 def create_app() -> FastAPI:
     app = FastAPI(title="HelloAgents Deep Researcher")
+    store = Store()
+    store.bootstrap(Configuration.from_env())
+    app.state.store = store
+    app.include_router(profile_router(store))
+    app.state.jobs = ResearchJobs(store, DeepResearchAgent)
+    app.include_router(research_router(store, app.state.jobs))
+    from reading_api import router as reading_router
+    app.include_router(reading_router(store, app.state.jobs))
+    from conversation_api import router as conversation_router
+    app.include_router(conversation_router(store, app.state.jobs))
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=["http://127.0.0.1:5174", "http://localhost:5174"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -89,6 +103,7 @@ def create_app() -> FastAPI:
 
     @app.on_event("startup")
     def log_startup_configuration() -> None:
+        store.recover_runs()
         config = Configuration.from_env()
 
         if config.llm_provider == "ollama":
@@ -120,7 +135,7 @@ def create_app() -> FastAPI:
     @app.post("/research", response_model=ResearchResponse)
     def run_research(payload: ResearchRequest) -> ResearchResponse:
         try:
-            config = _build_config(payload)
+            config = resolve_config(store, payload.model_profile_id, payload.search_api)
             agent = DeepResearchAgent(config=config)
             result = agent.run(payload.topic)
         except ModelOutputError as exc:
@@ -155,7 +170,7 @@ def create_app() -> FastAPI:
     @app.post("/research/stream")
     def stream_research(payload: ResearchRequest) -> StreamingResponse:
         try:
-            config = _build_config(payload)
+            config = resolve_config(store, payload.model_profile_id, payload.search_api)
             agent = DeepResearchAgent(config=config)
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc

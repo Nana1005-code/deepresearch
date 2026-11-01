@@ -8,8 +8,7 @@ from hello_agents import ToolAwareSimpleAgent
 
 from models import SummaryState
 from config import Configuration
-from utils import strip_thinking_tokens
-from services.text_processing import strip_tool_calls
+from services.text_processing import public_answer
 from services.llm import ModelOutputError, require_text
 
 
@@ -66,6 +65,8 @@ class ReportingService:
             f"如需输出汇总结论，可追加调用：[TOOL_CALL:note:{create_conclusion_template}] 保存报告要点。"
         )
 
+        prompt += "\n最终回复只输出 <final_answer> 与 </final_answer> 包裹的正式 Markdown 报告，以一级标题开头。不输出推理过程、工作计划、工具参数或笔记原始 JSON。"
+
         try:
             response = self._agent.run(prompt)
         except ModelOutputError as exc:
@@ -73,11 +74,4 @@ class ReportingService:
         finally:
             self._agent.clear_history()
 
-        report_text = (response or "").strip()
-        if self._config.strip_thinking_tokens:
-            report_text = strip_thinking_tokens(report_text)
-
-        report_text = strip_tool_calls(report_text).strip()
-
-        return require_text(report_text, "最终报告")
-
+        return require_text(public_answer(response or "", "report"), "最终报告")

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import re
+from time import perf_counter
 from pathlib import Path
 from queue import Empty, Queue
 from threading import Lock, Thread
@@ -79,7 +80,7 @@ class DeepResearchAgent:
     # ------------------------------------------------------------------
     def _init_llm(self) -> HelloAgentsLLM:
         """Instantiate HelloAgentsLLM following configuration preferences."""
-        llm_kwargs: dict[str, Any] = {"temperature": 0.0, "max_tokens": self.config.llm_max_tokens}
+        llm_kwargs: dict[str, Any] = {"temperature": 0.0, "max_tokens": self.config.llm_max_tokens, "timeout": self.config.llm_timeout}
 
         model_id = self.config.llm_model_id or self.config.local_llm
         if model_id:
@@ -165,7 +166,24 @@ class DeepResearchAgent:
         logger.debug("Starting streaming research: topic=%s", topic)
         yield {"type": "status", "message": "初始化研究流程"}
 
-        state.todo_items = self.planner.plan_todo_list(state)
+        yield {"type": "phase", "phase": "planning", "status": "started"}
+        query_failures = []
+        seed = getattr(self, 'resume_tasks', None)
+        if seed is None:
+            state.todo_items = self.planner.plan_todo_list(state)
+        else:
+            state.todo_items = [TodoItem(**{k:v for k,v in t.items() if k in TodoItem.__dataclass_fields__}) for t in seed]
+            for task in state.todo_items:
+                if self._cancelled(): return
+                if task.status == 'pending' and not task.query:
+                    try:
+                        task.query = self.llm.invoke([{'role':'system','content':'根据研究主题、任务标题和研究要求，生成一条适合网络搜索的查询。只输出搜索查询，不输出解释。'}, {'role':'user','content':f'研究主题：{topic}\n任务标题：{task.title}\n研究要求：{task.intent}'}]).strip()
+                    except Exception as exc:
+                        if self._cancelled(): return
+                        task.status='failed';task.error='搜索词生成失败：'+_safe_error(exc)
+                        query_failures.append(task)
+        if self._cancelled(): return
+        yield {"type": "phase", "phase": "planning", "status": "finished"}
         for event in self._drain_tool_events(state, step=0):
             yield event
         if not state.todo_items:
@@ -182,6 +200,9 @@ class DeepResearchAgent:
             "tasks": [self._serialize_task(t) for t in state.todo_items],
             "step": 0,
         }
+
+        for task in query_failures:
+            yield {'type':'task_status','task_id':task.id,'status':'failed','detail':task.error}
 
         event_queue: Queue[dict[str, Any]] = Queue()
 
@@ -250,18 +271,23 @@ class DeepResearchAgent:
             finally:
                 enqueue({"type": "__task_done__", "task_id": task.id})
 
+        yield {"type": "phase", "phase": "execution", "status": "started"}
         for task in state.todo_items:
+            if self._cancelled(): break
+            if task.status != 'pending': continue
             step = channel_map.get(task.id, {}).get("step", 0)
             thread = Thread(target=worker, args=(task, step), daemon=True)
             threads.append(thread)
             thread.start()
 
-        active_workers = len(state.todo_items)
+        active_workers = len(threads)
         finished_workers = 0
 
         try:
             while finished_workers < active_workers:
-                event = event_queue.get()
+                if self._cancelled(): return
+                try: event = event_queue.get(timeout=.2)
+                except Empty: continue
                 if event.get("type") == "__task_done__":
                     finished_workers += 1
                     continue
@@ -277,19 +303,28 @@ class DeepResearchAgent:
         finally:
             self._set_tool_event_sink(None)
             for thread in threads:
-                thread.join()
+                if not self._cancelled(): thread.join()
 
+        if self._cancelled(): return
+        yield {"type": "phase", "phase": "execution", "status": "finished"}
         if not any(task.status == "completed" for task in state.todo_items):
             yield {"type": "error", "detail": "所有子任务均失败或没有搜索结果，未生成报告。请查看各任务的系统提示。"}
             yield {"type": "done"}
             return
+        yield {"type": "phase", "phase": "report", "status": "started"}
+        report_failed = False
         try:
             report = self.reporting.generate_report(state)
         except ModelOutputError as exc:
+            report_failed = True
             logger.error("Final report failed: %s", exc)
             yield {"type": "error", "detail": str(exc)}
+        finally:
+            yield {"type": "phase", "phase": "report", "status": "finished"}
+        if report_failed:
             yield {"type": "done"}
             return
+        if self._cancelled(): return
         final_step = len(state.todo_items) + 1
         for event in self._drain_tool_events(state, step=final_step):
             yield event
@@ -311,6 +346,10 @@ class DeepResearchAgent:
     # ------------------------------------------------------------------
     # Execution helpers
     # ------------------------------------------------------------------
+    def _cancelled(self):
+        token = getattr(self, 'cancel_event', None)
+        return token is not None and token.is_set()
+
     def _execute_task(
         self,
         state: SummaryState,
@@ -320,13 +359,22 @@ class DeepResearchAgent:
         step: int | None = None,
     ) -> Iterator[dict[str, Any]]:
         """Run search + summarization for a single task."""
+        if self._cancelled(): return
         task.status = "in_progress"
 
-        search_result, notices, answer_text, backend = dispatch_search(
-            task.query,
-            self.config,
-            state.research_loop_count,
-        )
+        search_started = perf_counter()
+        if emit_stream:
+            yield {"type":"task_timing", "task_id":task.id, "phase":"search", "status":"started"}
+        try:
+            search_result, notices, answer_text, backend = dispatch_search(
+                task.query,
+                self.config,
+                state.research_loop_count,
+            )
+        finally:
+            if emit_stream:
+                yield {"type":"task_timing", "task_id":task.id, "phase":"search", "status":"finished", "elapsed":perf_counter()-search_started}
+        if self._cancelled(): return
         self._last_search_notices = notices
         task.notices = notices
 
@@ -383,44 +431,52 @@ class DeepResearchAgent:
             state.sources_gathered.append(sources_summary)
             state.research_loop_count += 1
 
-        summary_text: str | None = None
-
+        summary_started = perf_counter()
         if emit_stream:
-            for event in self._drain_tool_events(state, step=step):
-                yield event
-            yield {
-                "type": "sources",
-                "task_id": task.id,
-                "latest_sources": sources_summary,
-                "raw_context": context,
-                "step": step,
-                "backend": backend,
-                "note_id": task.note_id,
-                "note_path": task.note_path,
-            }
+            yield {"type":"task_timing", "task_id":task.id, "phase":"summary", "status":"started"}
+        try:
+            summary_text: str | None = None
 
-            summary_stream, summary_getter = self.summarizer.stream_task_summary(state, task, context)
-            try:
+            if emit_stream:
                 for event in self._drain_tool_events(state, step=step):
                     yield event
-                for chunk in summary_stream:
-                    if chunk:
-                        yield {
-                            "type": "task_summary_chunk",
-                            "task_id": task.id,
-                            "content": chunk,
-                            "note_id": task.note_id,
-                            "step": step,
-                        }
+                yield {
+                    "type": "sources",
+                    "task_id": task.id,
+                    "latest_sources": sources_summary,
+                    "raw_context": context,
+                    "step": step,
+                    "backend": backend,
+                    "note_id": task.note_id,
+                    "note_path": task.note_path,
+                }
+
+                summary_stream, summary_getter = self.summarizer.stream_task_summary(state, task, context)
+                try:
                     for event in self._drain_tool_events(state, step=step):
                         yield event
-            except ModelOutputError as exc:
-                raise ModelOutputError(f"任务总结失败：{exc}") from exc
-            summary_text = summary_getter()
-        else:
-            summary_text = self.summarizer.summarize_task(state, task, context)
-            self._drain_tool_events(state)
+                    for chunk in summary_stream:
+                        if chunk:
+                            yield {
+                                "type": "task_summary_chunk",
+                                "task_id": task.id,
+                                "content": chunk,
+                                "note_id": task.note_id,
+                                "step": step,
+                            }
+                        for event in self._drain_tool_events(state, step=step):
+                            yield event
+                except ModelOutputError as exc:
+                    raise ModelOutputError(f"任务总结失败：{exc}") from exc
+                summary_text = summary_getter()
+            else:
+                summary_text = self.summarizer.summarize_task(state, task, context)
+                self._drain_tool_events(state)
+        finally:
+            if emit_stream:
+                yield {"type":"task_timing", "task_id":task.id, "phase":"summary", "status":"finished", "elapsed":perf_counter()-summary_started}
 
+        if self._cancelled(): return
         task.summary = require_text(summary_text, "任务总结")
         task.status = "completed"
 

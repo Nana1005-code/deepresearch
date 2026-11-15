@@ -1,0 +1,106 @@
+DeepResearch 整合版功能验收记录
+日期：2026-11-15（北京时间）
+项目目录：D:\codex\xueqixiangmu4\finalproj
+仓库：https://github.com/chenjitai/Deepresearch-integrated
+测试提交：119a53b
+
+一、部署结果
+已按 README 新建 Python 3.11.3 虚拟环境，安装 requirements.local.txt；使用 Node 22.17.0 / npm ci 安装前端。
+模型：DeepSeek Flash / deepseek/deepseek-v4.1-flash
+正确 API 地址：https://api.tokenplus.cn/v1
+搜索：Tavily。密钥仅保存在被 Git 忽略的本地配置和本机模型数据库中，本记录不含密钥。
+前端：http://127.0.0.1:5174/
+健康检查：http://127.0.0.1:8000/healthz -> {"status":"ok"}
+当前前后端继续运行；没有仍在运行的测试研究。
+启动：在项目根目录运行 .\start-local.cmd
+停止：在项目根目录运行 .\stop-local.cmd
+已将 DeepSeek Flash 排在模型列表首位。导入的无密钥历史样例配置仅供参考；真实调用请选择 DeepSeek Flash。
+
+二、基础检查
+pip check：通过，无冲突。
+后端 unittest：189 项，全部通过（46.425 秒）。日志：.runtime\unittest.log。
+前端：vue-tsc --noEmit && vite build 通过。
+npm ci 审计提示 14 项依赖漏洞（2 moderate、12 high），未升级依赖或执行 audit fix，本次启动未受影响。
+业务源码保持克隆版本，未修改或提交。测试脚本、日志、截图、下载样本在 .runtime（Git 忽略目录）。
+
+三、按四份说明逐项验收
+
+1. Ver1 基础研究与对话：主要流程通过
+- 首页加载、研究/对话入口、模型配置与实际连接、历史读取：通过。
+- 真实模型对话：返回“测试成功”；保留了模型和 API 端点元信息。
+- Tavily 联网研究：完成规划、真实来源检索、子任务和最终报告生成。
+- 修改/新增任务：最终完成；删除任务：完成，revision=2；修改研究主题：完成，revision=3。
+- 历史报告显示进度、任务耗时与研究流程；展开流程：通过。
+- 报告拖动到右侧分屏、调整对照宽度、关闭分屏：通过。
+- 笔记 API 新建/读取/修改/删除：通过；页面正文编辑、图片插入、保存：通过。
+- 报告文字选择、添加高亮、取消高亮、选中文字打开引用对话：通过。
+- 实际报告上下文问答：正确回答专用测试资料里的项目编号 XQ-8472。
+- 限制：本次验证代表性流程，不代表所有任务组合、所有模型和所有来源链接永远可用。
+
+2. 新增功能（导出与本地资料）：主要流程通过
+- 页面 MD 下载：通过，实际取得 .md 文件。
+- 页面 Word 下载：通过，实际取得 .docx；后端导出文件可由 python-docx 打开，125 个段落。
+- PDF：页面确实生成打印窗口和完整报告内容；无头 Chrome 导出成 PDF。为避免自动打印与 Page.printToPDF 同时工作，测试浏览器将 window.print 替换为记录动作，再保存 PDF；未实测桌面打印对话框“另存为 PDF”最后一步。
+- TXT、Markdown、DOCX、含文本 PDF 上传：通过。PDF 识别到 12 页。
+- 原文件下载字节一致、重复文件拒绝 409、不支持类型拒绝 400、删除本次测试文件：通过。
+- 本地资料加入研究：真实执行完成，sources 事件包含 local://documents/...，报告准确引用资料中的 XQ-8472 与三个阶段。
+- 本地资料研究后续编辑曾在 DuckDuckGo 受限时出现 partial；联网搜索切到 Tavily 后，独立联网研究的任务增删改和主题修改均完成。
+
+3. Report Quality Gate：可运行，但存在两项可复现缺陷，不能全项通过
+通过项：
+- 历史报告审计评分、问题/参考文献/来源/引用位置/质检单页签、原文定位、标注样式、生成质检单均可运行。
+- 样例报告审计为 85/B，25 条来源可核验；这是模块输出，受下面的解析缺陷影响，不应视作正确评分的证明。
+- 连续审计除时间戳外一致；审计前后研究事件完全一致。
+- plain 与 gbt7714-lite 两种质检单返回非空正文。
+
+缺陷 Q1（中等）：参考来源的子标题未继承参考文献属性。
+最小复现文本：
+## 参考来源
+### 任务1
+- Python — https://docs.python.org/3/library/asyncio.html
+实际：references=0，inline_citations=1，并报 empty_reference_section。
+期望：子章节中的来源仍归入参考来源，不应算作正文行内引用或误报参考来源为空。
+真实样例同样复现：末尾分任务排列 25 条来源，但参考文献页签为 0，出现“参考文献为空”。
+影响：引用统计、参考文献清单与评分可能不准确。
+相关位置：backend/src/quality/parse.py 的章节识别；backend/src/quality/checks.py 的 reference_ranges。
+
+缺陷 Q2（轻微）：标记关闭后 DOM 未完全恢复原样。
+实际：角标和可见高亮均已清除，但 4 个标题节点留下 class=""。
+前后 innerHTML 长度分别 17745 / 17781；差异仅为空 class 属性。
+影响：不妨碍正常阅读，但不满足说明中的“DOM 完全复原”。
+相关位置：frontend/src/components/QualityMarkerLayer.ts，clear() 只移除类名，未恢复原始 class 属性是否存在的状态。
+证据：.runtime/dom-before.html、.runtime/dom-after.html。
+本次按测试请求记录问题，未修改业务源码。
+
+4. 研究图谱：小样本主要流程通过
+- 真实研究导入队列、失败后重试、重复导入 409：通过。
+- 成功提取个人图谱 4 个节点、6 条关系。
+- 置顶、分页接口、节点关联记录详情、取消导入、原研究保留、重新导入：通过。
+- OpenAlex 真实导入 10 篇论文、27 个主题；真实 AI 中文化处理 27/27。
+- 学术图谱生成 27 个节点、28 条关系；两类图谱画布渲染、滚轮操作、重置视图：通过。
+- 学术主题详情接口和论文列表：通过。
+- 学术问答与遗漏助手：真实调用模型并基于本机数据返回结果。
+- 语义归并 dry-run 找到 3 个候选源；实际处理 3 个，自动合并 0、待复核 1，正常结束。没有强行合并不同主题。
+- 最终 audit.py：ok=True，problems=[]。
+- 限制：仅 10 篇真实论文的小样本；未做 5000–10000 条批量压力测试、队列满载并发测试或故障中断恢复实测；没有可合并的高置信度样本，不能宣称实际合并效果已验证。
+
+四、环境问题与最终配置
+首次给定 chatapi.zjt66.top 地址对两枚密钥均返回 401；用户更正为 api.tokenplus.cn 后连接成功，此问题已解决。
+DuckDuckGo 在当前网络未返回可解析结果，真实研究失败；用户提供 Tavily Key 后切换成功，真实联网研究已完成。
+内置浏览器工具受宿主运行时故障影响；页面验收最终使用本机 Chrome 无头自动化完成。
+
+五、可复查证据
+.runtime/unittest.log：完整后端测试。
+.runtime/api-results.json：基础 API 验收（当时图谱为空的接口返回仅代表空状态处理，最终图谱结果见后续文件）。
+.runtime/network-result.json：Tavily 完整研究。
+.runtime/task-edit-result.json、task-delete-result.json、topic-edit-result.json：任务与主题重生成。
+.runtime/run-4f4014275a274780a39d8e3290256951.json：本地文献研究完成及引用证据。
+.runtime/graph-and-context-results.json：图谱管理、节点详情、学术问答、遗漏助手、上下文问答。
+.runtime/openalex-enrich.log、openalex-merge.log：真实 AI 中文化及语义归并。
+.runtime/ui-advanced-results.json：分屏、质检跳转、质检单、两类图谱画布。
+.runtime/ui-export.md、ui-export.docx、ui-export.pdf：实际导出结果。
+.runtime/quality.json、quality-plain.md、quality-gbt7714-lite.md：质检输出。
+.runtime/personal-graph.png、academic-graph.png、split.png、note.png、quality-panel.png：页面截图。
+截图按拍摄时点保留，较早截图可能仍显示配置更正前的导入失败提示；最终导入已成功。
+
+结论：项目成功启动；基础研究/对话、导出/本地资料、研究图谱的主要路径可运行。报告质检可使用，但参考来源分层识别有误报，且标记关闭未完全恢复 DOM，因此“四份说明全部正常”这一结论不成立。

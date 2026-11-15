@@ -1,0 +1,74 @@
+[
+  {
+    "check": "shared toolbar styles",
+    "styles": [
+      {
+        "label": "检质检",
+        "height": 32,
+        "font": "12px",
+        "radius": "7px",
+        "padding": "6px 10px",
+        "bg": "rgb(247, 249, 252)"
+      },
+      {
+        "label": "标记",
+        "height": 32,
+        "font": "12px",
+        "radius": "7px",
+        "padding": "6px 10px",
+        "bg": "rgb(247, 249, 252)"
+      },
+      {
+        "label": "MD",
+        "height": 32,
+        "font": "12px",
+        "radius": "7px",
+        "padding": "6px 10px",
+        "bg": "rgb(247, 249, 252)"
+      },
+      {
+        "label": "Word",
+        "height": 32,
+        "font": "12px",
+        "radius": "7px",
+        "padding": "6px 10px",
+        "bg": "rgb(247, 249, 252)"
+      },
+      {
+        "label": "PDF",
+        "height": 32,
+        "font": "12px",
+        "radius": "7px",
+        "padding": "6px 10px",
+        "bg": "rgb(247, 249, 252)"
+      },
+      {
+        "label": "Note",
+        "height": 32,
+        "font": "12px",
+        "radius": "7px",
+        "padding": "6px 10px",
+        "bg": "rgb(247, 249, 252)"
+      }
+    ]
+  },
+  {
+    "check": "mark directly without opening audit; text offsets unchanged",
+    "marks": 6
+  },
+  {
+    "check": "toggle off restores original DOM"
+  },
+  {
+    "check": "markers survive reload and asynchronous saved-highlight render"
+  },
+  {
+    "check": "three source repairs and navigation; page top stable"
+  },
+  {
+    "check": "loading failure leaves switch off and retry succeeds"
+  },
+  {
+    "check": "report events unchanged; no browser errors"
+  }
+]

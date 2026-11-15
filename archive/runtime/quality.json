@@ -1,0 +1,668 @@
+{
+  "report_available": true,
+  "metrics": {
+    "cited_links": 25,
+    "cited_unique": 25,
+    "retrieved_unique": 25,
+    "verified": 25,
+    "unverified": 0,
+    "uncited": 0,
+    "local_refs": 0,
+    "sections": 28,
+    "sections_without_source": 10,
+    "coverage": 1.0,
+    "source_usage": 1.0,
+    "inline_citations": 25,
+    "numeric_citations": 0,
+    "references": 0
+  },
+  "score": 85,
+  "grade": "B",
+  "issues": [
+    {
+      "type": "empty_reference_section",
+      "severity": "warn",
+      "message": "报告有「参考来源」标题，但下面没有任何链接"
+    },
+    {
+      "type": "no_source_section",
+      "severity": "info",
+      "message": "该章节 448 字、包含具体结论，但没有任何行内引用，结论无法核验",
+      "section": "1. 背景概览",
+      "snippet": "- **架构层面**：行业首次形式化了\"原生性（nativity）\"的判定标准，把过去含糊的\"编码器 + 投影层 + LLM\"描述替换为 late-fusion / mid-fusion / early-fusion 的三段式元框架（任务 1）。"
+    },
+    {
+      "type": "no_source_section",
+      "severity": "info",
+      "message": "该章节 496 字、包含具体结论，但没有任何行内引用，结论无法核验",
+      "section": "洞见一：2026 年架构讨论的\"元框架\"已被形式化，UMM 与 NMM 必须严格区分（任务 1）",
+      "snippet": "并用输入-输出对偶性区分 **M2T**（多模态到文本）、**M2G**（多模态到场景化生成）、**M2M**（多模态到多模态）。"
+    },
+    {
+      "type": "no_source_section",
+      "severity": "info",
+      "message": "该章节 625 字、包含具体结论，但没有任何行内引用，结论无法核验",
+      "section": "洞见二：统一 token 空间的 M2M 对称建模是主战场，但呈\"三足鼎立\"而非单一路线（任务 1）",
+      "snippet": "1. **自回归 next-token prediction**：Show-o → Show-o2、Emu3 → Emu3.5、Janus/JanusFlow（解耦视觉编码）、AnyGPT、BAGEL。"
+    },
+    {
+      "type": "no_source_section",
+      "severity": "info",
+      "message": "该章节 583 字、包含具体结论，但没有任何行内引用，结论无法核验",
+      "section": "洞见三：训练范式从\"堆量\"转向\"配方\"，位置编码回潮，RLVR 在多模态场景暴露感知瓶颈（任务 2）",
+      "snippet": "- **数据侧**：ICLR 2026 一项 1T token、100+ 组对照实验、约 50 万 GPU 小时的预训练研究证明，能力对**视觉编码器与视觉指令微调数据**最敏感，而\"描述视觉世界的文本数据\"收益**很快饱和**。"
+    }
+  ],
+  "issue_summary": {
+    "error": 0,
+    "warn": 1,
+    "info": 4
+  },
+  "sources": [
+    {
+      "index": 1,
+      "url": "https://arxiv.org/pdf/2605.25343",
+      "title": "Toward Native Multimodal Modeling: A Roadmap - arXiv.org",
+      "domain": "arxiv.org",
+      "kind": "web",
+      "task_ids": [
+        1
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 2,
+      "url": "https://www.mdpi.com/2079-3197/14/6/125",
+      "title": "A Comprehensive Survey and Guide to Multimodal Large Language Models in Vision–Language Tasks",
+      "domain": "mdpi.com",
+      "kind": "web",
+      "task_ids": [
+        1
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 3,
+      "url": "https://aclanthology.org/2026.findings-acl.1853",
+      "title": "Towards Unified Multimodal Large Language Models: A survey - ACL Anthology",
+      "domain": "aclanthology.org",
+      "kind": "web",
+      "task_ids": [
+        1
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 4,
+      "url": "https://zread.ai/BradyFU/Awesome-Multimodal-Large-Language-Models/19-unified-understanding-and-generation",
+      "title": "Unified Understanding and Generation | BradyFU/Awesome-Multimodal-Large-Language-Models | Zread",
+      "domain": "zread.ai",
+      "kind": "web",
+      "task_ids": [
+        1
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 5,
+      "url": "https://cdn.jsdelivr.net/gh/OpenEnvision/Awesome-Multimodal-Modeling@main/README.md",
+      "title": "https://cdn.jsdelivr.net/gh/OpenEnvision/Awesome-Multimodal-Modeling@main/README.md",
+      "domain": "cdn.jsdelivr.net",
+      "kind": "web",
+      "task_ids": [
+        1
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 6,
+      "url": "https://iclr.cc/virtual/2026/events/oral",
+      "title": "ICLR 2026 Orals",
+      "domain": "iclr.cc",
+      "kind": "web",
+      "task_ids": [
+        2
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 7,
+      "url": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/zhang25cs/zhang25cs.pdf",
+      "title": "MM-RLHF: The Next Step Forward in Multimodal LLM Alignment",
+      "domain": "raw.githubusercontent.com",
+      "kind": "web",
+      "task_ids": [
+        2
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 8,
+      "url": "https://www.preprints.org/frontend/manuscript/ed7a20eb7a0ebbc2b648751981fa9240/download_pub",
+      "title": "A Survey on Post-Training of Multimodal Large Language ...",
+      "domain": "preprints.org",
+      "kind": "web",
+      "task_ids": [
+        2
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 9,
+      "url": "https://developer.dataiku.com/latest/tutorials/genai/llm/alignment/index.html",
+      "title": "Advanced model alignment: RLHF, RLAIF, and RLVR in Dataiku - Dataiku Developer Guide",
+      "domain": "developer.dataiku.com",
+      "kind": "web",
+      "task_ids": [
+        2
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 10,
+      "url": "https://www.paperdigest.org/2026/04/iclr-2026-papers-with-code-data",
+      "title": "ICLR 2026 Papers with Code & Data – Paper Digest",
+      "domain": "paperdigest.org",
+      "kind": "web",
+      "task_ids": [
+        2
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 11,
+      "url": "https://benchlm.ai/multimodal-grounded",
+      "title": "Best LLMs for Multimodal & Grounded — October 2026 Leaderboard | BenchLM.ai",
+      "domain": "benchlm.ai",
+      "kind": "web",
+      "task_ids": [
+        3
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 12,
+      "url": "https://huggingface.co/collections/btjhjeon/multimodal-benchmarks",
+      "title": "Multimodal Benchmarks - a btjhjeon Collection",
+      "domain": "huggingface.co",
+      "kind": "web",
+      "task_ids": [
+        3
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 13,
+      "url": "https://arxiv.org/html/2411.15296v1",
+      "title": "MME-Survey: A Comprehensive Survey on Evaluation of Multimodal LLMs",
+      "domain": "arxiv.org",
+      "kind": "web",
+      "task_ids": [
+        3
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 14,
+      "url": "https://llm-stats.com/benchmarks/mmbench-video",
+      "title": "MMBench-Video Leaderboard",
+      "domain": "llm-stats.com",
+      "kind": "web",
+      "task_ids": [
+        3
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 15,
+      "url": "https://video-mme.github.io/home_page.html",
+      "title": "Video-MME",
+      "domain": "video-mme.github.io",
+      "kind": "web",
+      "task_ids": [
+        3
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 16,
+      "url": "https://www.wispaper.ai/en/research/multimodal-ai-real-world",
+      "title": "Are multimodal AI agents ready for real-world deployment?",
+      "domain": "wispaper.ai",
+      "kind": "web",
+      "task_ids": [
+        4
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 17,
+      "url": "https://finance.yahoo.com/sectors/technology/articles/vultr-deploys-nvidia-nemotron-3-160000410.html",
+      "title": "Vultr Deploys NVIDIA Nemotron 3 Nano Omni to Streamline Multimodal Enterprise Agent Systems",
+      "domain": "finance.yahoo.com",
+      "kind": "web",
+      "task_ids": [
+        4
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 18,
+      "url": "https://arxiv.org/html/2506.22355v1",
+      "title": "Embodied AI Agents: Modeling the World",
+      "domain": "arxiv.org",
+      "kind": "web",
+      "task_ids": [
+        4
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 19,
+      "url": "https://winder.ai/top-ai-agent-development-companies-2026",
+      "title": "Top AI Agent Development Companies in 2026: Who Has Actually Shipped One",
+      "domain": "winder.ai",
+      "kind": "web",
+      "task_ids": [
+        4
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 20,
+      "url": "https://markets.businessinsider.com/news/stocks/iflytek-showcases-all-in-one-ai-solutions-at-mwc26-bringing-private-customizable-ai-to-industry-1035901167",
+      "title": "iFLYTEK Showcases All-In-One AI Solutions at MWC26, Bringing Private, Customizable AI to Industry | Markets Insider",
+      "domain": "markets.businessinsider.com",
+      "kind": "web",
+      "task_ids": [
+        4
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 21,
+      "url": "https://dreamypujara.medium.com/the-hallucinatory-horizon-navigating-the-perils-and-promises-of-multimodal-large-language-models-c749ccc5b95c",
+      "title": "Medium",
+      "domain": "dreamypujara.medium.com",
+      "kind": "web",
+      "task_ids": [
+        5
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 22,
+      "url": "https://amiad-research.github.io/trustworthy-mllm-tutorial",
+      "title": "From Hallucination Detection to Adversarial Defense: A Unified Framework for LVLM and LLM Safety",
+      "domain": "amiad-research.github.io",
+      "kind": "web",
+      "task_ids": [
+        5
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 23,
+      "url": "https://huggingface.co/papers?q=multi-modal+conflicting+hallucination",
+      "title": "Daily Papers - Hugging Face",
+      "domain": "huggingface.co",
+      "kind": "web",
+      "task_ids": [
+        5
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 24,
+      "url": "https://huggingface.co/papers?q=multimodal+hallucination",
+      "title": "Daily Papers - Hugging Face",
+      "domain": "huggingface.co",
+      "kind": "web",
+      "task_ids": [
+        5
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    },
+    {
+      "index": 25,
+      "url": "https://link.springer.com/article/10.1007/s10586-025-05891-z",
+      "title": "The rise of hallucination in large language models: systematic reviews, performance analysis and challenges | Cluster Computing | Springer Nature Link",
+      "domain": "link.springer.com",
+      "kind": "web",
+      "task_ids": [
+        5
+      ],
+      "cited": true,
+      "verified": true,
+      "number": null
+    }
+  ],
+  "citations": [
+    {
+      "url": "https://arxiv.org/pdf/2605.25343",
+      "title": "Toward Native Multimodal Modeling: A Roadmap",
+      "form": "bullet",
+      "section": "任务 1：架构与模型演进",
+      "line": 175,
+      "snippet": "- Toward Native Multimodal Modeling: A Roadmap — https://arxiv.org/pdf/2605.25343",
+      "quote": "Toward Native Multimodal Modeling: A Roadmap",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://www.mdpi.com/2079-3197/14/6/125",
+      "title": "A Comprehensive Survey and Guide to Multimodal Large Language Models in Vision–Language Tasks（MDPI *Computation* 14(6):125）",
+      "form": "bullet",
+      "section": "任务 1：架构与模型演进",
+      "line": 176,
+      "snippet": "- A Comprehensive Survey and Guide to Multimodal Large Language Models in Vision–Language Tasks（MDPI *Computation* 14(6):125）— https://www.mdpi.com/2079-3197/14",
+      "quote": "A Comprehensive Survey and Guide to Multimodal Large Language Models in Vision–Language Tasks（MDPI *Computation* 14(6):125）",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://aclanthology.org/2026.findings-acl.1853",
+      "title": "Towards Unified Multimodal Large Language Models: A survey（ACL Findings 2026）",
+      "form": "bullet",
+      "section": "任务 1：架构与模型演进",
+      "line": 177,
+      "snippet": "- Towards Unified Multimodal Large Language Models: A survey（ACL Findings 2026）— https://aclanthology.org/2026.findings-acl.1853",
+      "quote": "Towards Unified Multimodal Large Language Models: A survey（ACL Findings 2026）",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://zread.ai/BradyFU/Awesome-Multimodal-Large-Language-Models/19-unified-understanding-and-generation",
+      "title": "Unified Understanding and Generation | BradyFU/Awesome-Multimodal-Large-Language-Models | Zread",
+      "form": "bullet",
+      "section": "任务 1：架构与模型演进",
+      "line": 178,
+      "snippet": "- Unified Understanding and Generation | BradyFU/Awesome-Multimodal-Large-Language-Models | Zread — https://zread.ai/BradyFU/Awesome-Multimodal-Large-Language-M",
+      "quote": "Unified Understanding and Generation | BradyFU/Awesome-Multimodal-Large-Language-Models | Zread",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/OpenEnvision/Awesome-Multimodal-Modeling@main/README.md",
+      "title": "Awesome Multimodal Modeling（OpenEnvision）",
+      "form": "bullet",
+      "section": "任务 1：架构与模型演进",
+      "line": 179,
+      "snippet": "- Awesome Multimodal Modeling（OpenEnvision）— https://cdn.jsdelivr.net/gh/OpenEnvision/Awesome-Multimodal-Modeling@main/README.md",
+      "quote": "Awesome Multimodal Modeling（OpenEnvision）",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://iclr.cc/virtual/2026/events/oral",
+      "title": "ICLR 2026 Orals",
+      "form": "bullet",
+      "section": "任务 2：训练与对齐方法",
+      "line": 183,
+      "snippet": "- ICLR 2026 Orals — https://iclr.cc/virtual/2026/events/oral",
+      "quote": "ICLR 2026 Orals",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/zhang25cs/zhang25cs.pdf",
+      "title": "MM-RLHF: The Next Step Forward in Multimodal LLM Alignment",
+      "form": "bullet",
+      "section": "任务 2：训练与对齐方法",
+      "line": 184,
+      "snippet": "- MM-RLHF: The Next Step Forward in Multimodal LLM Alignment — https://raw.githubusercontent.com/mlresearch/v267/main/assets/zhang25cs/zhang25cs.pdf",
+      "quote": "MM-RLHF: The Next Step Forward in Multimodal LLM Alignment",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://www.preprints.org/frontend/manuscript/ed7a20eb7a0ebbc2b648751981fa9240/download_pub",
+      "title": "A Survey on Post-Training of Multimodal Large Language Models",
+      "form": "bullet",
+      "section": "任务 2：训练与对齐方法",
+      "line": 185,
+      "snippet": "- A Survey on Post-Training of Multimodal Large Language Models — https://www.preprints.org/frontend/manuscript/ed7a20eb7a0ebbc2b648751981fa9240/download_pub",
+      "quote": "A Survey on Post-Training of Multimodal Large Language Models",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://developer.dataiku.com/latest/tutorials/genai/llm/alignment/index.html",
+      "title": "Advanced model alignment: RLHF, RLAIF, and RLVR in Dataiku",
+      "form": "bullet",
+      "section": "任务 2：训练与对齐方法",
+      "line": 186,
+      "snippet": "- Advanced model alignment: RLHF, RLAIF, and RLVR in Dataiku — https://developer.dataiku.com/latest/tutorials/genai/llm/alignment/index.html",
+      "quote": "Advanced model alignment: RLHF, RLAIF, and RLVR in Dataiku",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://www.paperdigest.org/2026/04/iclr-2026-papers-with-code-data",
+      "title": "ICLR 2026 Papers with Code & Data – Paper Digest",
+      "form": "bullet",
+      "section": "任务 2：训练与对齐方法",
+      "line": 187,
+      "snippet": "- ICLR 2026 Papers with Code & Data – Paper Digest — https://www.paperdigest.org/2026/04/iclr-2026-papers-with-code-data",
+      "quote": "ICLR 2026 Papers with Code & Data – Paper Digest",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://benchlm.ai/multimodal-grounded",
+      "title": "Best LLMs for Multimodal & Grounded — October 2026 Leaderboard | BenchLM.ai",
+      "form": "bullet",
+      "section": "任务 3：评测基准与能力",
+      "line": 191,
+      "snippet": "- Best LLMs for Multimodal & Grounded — October 2026 Leaderboard | BenchLM.ai — https://benchlm.ai/multimodal-grounded",
+      "quote": "Best LLMs for Multimodal & Grounded — October 2026 Leaderboard | BenchLM.ai",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://huggingface.co/collections/btjhjeon/multimodal-benchmarks",
+      "title": "Multimodal Benchmarks（btjhjeon Collection）",
+      "form": "bullet",
+      "section": "任务 3：评测基准与能力",
+      "line": 192,
+      "snippet": "- Multimodal Benchmarks（btjhjeon Collection）— https://huggingface.co/collections/btjhjeon/multimodal-benchmarks",
+      "quote": "Multimodal Benchmarks（btjhjeon Collection）",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://arxiv.org/html/2411.15296v1",
+      "title": "MME-Survey: A Comprehensive Survey on Evaluation of Multimodal LLMs",
+      "form": "bullet",
+      "section": "任务 3：评测基准与能力",
+      "line": 193,
+      "snippet": "- MME-Survey: A Comprehensive Survey on Evaluation of Multimodal LLMs — https://arxiv.org/html/2411.15296v1",
+      "quote": "MME-Survey: A Comprehensive Survey on Evaluation of Multimodal LLMs",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://llm-stats.com/benchmarks/mmbench-video",
+      "title": "MMBench-Video Leaderboard",
+      "form": "bullet",
+      "section": "任务 3：评测基准与能力",
+      "line": 194,
+      "snippet": "- MMBench-Video Leaderboard — https://llm-stats.com/benchmarks/mmbench-video",
+      "quote": "MMBench-Video Leaderboard",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://video-mme.github.io/home_page.html",
+      "title": "Video-MME",
+      "form": "bullet",
+      "section": "任务 3：评测基准与能力",
+      "line": 195,
+      "snippet": "- Video-MME — https://video-mme.github.io/home_page.html",
+      "quote": "Video-MME",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://www.wispaper.ai/en/research/multimodal-ai-real-world",
+      "title": "Are multimodal AI agents ready for real-world deployment?",
+      "form": "bullet",
+      "section": "任务 4：应用与落地",
+      "line": 199,
+      "snippet": "- Are multimodal AI agents ready for real-world deployment? — https://www.wispaper.ai/en/research/multimodal-ai-real-world",
+      "quote": "Are multimodal AI agents ready for real-world deployment?",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://finance.yahoo.com/sectors/technology/articles/vultr-deploys-nvidia-nemotron-3-160000410.html",
+      "title": "Vultr Deploys NVIDIA Nemotron 3 Nano Omni to Streamline Multimodal Enterprise Agent Systems",
+      "form": "bullet",
+      "section": "任务 4：应用与落地",
+      "line": 200,
+      "snippet": "- Vultr Deploys NVIDIA Nemotron 3 Nano Omni to Streamline Multimodal Enterprise Agent Systems — https://finance.yahoo.com/sectors/technology/articles/vultr-depl",
+      "quote": "Vultr Deploys NVIDIA Nemotron 3 Nano Omni to Streamline Multimodal Enterprise Agent Systems",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://arxiv.org/html/2506.22355v1",
+      "title": "Embodied AI Agents: Modeling the World",
+      "form": "bullet",
+      "section": "任务 4：应用与落地",
+      "line": 201,
+      "snippet": "- Embodied AI Agents: Modeling the World — https://arxiv.org/html/2506.22355v1",
+      "quote": "Embodied AI Agents: Modeling the World",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://winder.ai/top-ai-agent-development-companies-2026",
+      "title": "Top AI Agent Development Companies in 2026: Who Has Actually Shipped One",
+      "form": "bullet",
+      "section": "任务 4：应用与落地",
+      "line": 202,
+      "snippet": "- Top AI Agent Development Companies in 2026: Who Has Actually Shipped One — https://winder.ai/top-ai-agent-development-companies-2026",
+      "quote": "Top AI Agent Development Companies in 2026: Who Has Actually Shipped One",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://markets.businessinsider.com/news/stocks/iflytek-showcases-all-in-one-ai-solutions-at-mwc26-bringing-private-customizable-ai-to-industry-1035901167",
+      "title": "iFLYTEK Showcases All-In-One AI Solutions at MWC26",
+      "form": "bullet",
+      "section": "任务 4：应用与落地",
+      "line": 203,
+      "snippet": "- iFLYTEK Showcases All-In-One AI Solutions at MWC26 — https://markets.businessinsider.com/news/stocks/iflytek-showcases-all-in-one-ai-solutions-at-mwc26-bringi",
+      "quote": "iFLYTEK Showcases All-In-One AI Solutions at MWC26",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://dreamypujara.medium.com/the-hallucinatory-horizon-navigating-the-perils-and-promises-of-multimodal-large-language-models-c749ccc5b95c",
+      "title": "The Hallucinatory Horizon: Navigating the Perils and Promises of Multimodal Large Language Models",
+      "form": "bullet",
+      "section": "任务 5：挑战与前沿",
+      "line": 209,
+      "snippet": "- The Hallucinatory Horizon: Navigating the Perils and Promises of Multimodal Large Language Models — https://dreamypujara.medium.com/the-hallucinatory-horizon-",
+      "quote": "The Hallucinatory Horizon: Navigating the Perils and Promises of Multimodal Large Language Models",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://amiad-research.github.io/trustworthy-mllm-tutorial",
+      "title": "From Hallucination Detection to Adversarial Defense: A Unified Framework for LVLM and LLM Safety",
+      "form": "bullet",
+      "section": "任务 5：挑战与前沿",
+      "line": 210,
+      "snippet": "- From Hallucination Detection to Adversarial Defense: A Unified Framework for LVLM and LLM Safety — https://amiad-research.github.io/trustworthy-mllm-tutorial",
+      "quote": "From Hallucination Detection to Adversarial Defense: A Unified Framework for LVLM and LLM Safety",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://huggingface.co/papers?q=multi-modal+conflicting+hallucination",
+      "title": "Daily Papers: multi-modal conflicting hallucination（Hugging Face）",
+      "form": "bullet",
+      "section": "任务 5：挑战与前沿",
+      "line": 211,
+      "snippet": "- Daily Papers: multi-modal conflicting hallucination（Hugging Face）— https://huggingface.co/papers?q=multi-modal+conflicting+hallucination",
+      "quote": "Daily Papers: multi-modal conflicting hallucination（Hugging Face）",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://huggingface.co/papers?q=multimodal+hallucination",
+      "title": "Daily Papers: multimodal hallucination（Hugging Face）",
+      "form": "bullet",
+      "section": "任务 5：挑战与前沿",
+      "line": 212,
+      "snippet": "- Daily Papers: multimodal hallucination（Hugging Face）— https://huggingface.co/papers?q=multimodal+hallucination",
+      "quote": "Daily Papers: multimodal hallucination（Hugging Face）",
+      "number": null,
+      "in_reference": false
+    },
+    {
+      "url": "https://link.springer.com/article/10.1007/s10586-025-05891-z",
+      "title": "The rise of hallucination in large language models: systematic reviews, performance analysis and challenges（Cluster Computing, Springer）",
+      "form": "bullet",
+      "section": "任务 5：挑战与前沿",
+      "line": 213,
+      "snippet": "- The rise of hallucination in large language models: systematic reviews, performance analysis and challenges（Cluster Computing, Springer）— https://link.springe",
+      "quote": "The rise of hallucination in large language models: systematic reviews, performance analysis and challenges（Cluster Computing, Springer）",
+      "number": null,
+      "in_reference": false
+    }
+  ],
+  "references": [],
+  "run_id": "dd27725b2d6f4902ac8b554d32f14996",
+  "topic": "探究多模态大模型在2026年的研究现状"
+}

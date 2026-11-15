@@ -1,0 +1,11 @@
+{
+  "database": "D:\\codex\\xueqixiangmu4\\finalproj\\backend\\data\\research_square.sqlite3",
+  "backup": "D:\\codex\\xueqixiangmu4\\finalproj\\backend\\data\\backups\\research_square-before-demo-20261115-193955.sqlite3",
+  "counts": {
+    "openalex_works": 30000,
+    "openalex_topics": 4244,
+    "public_researches": 43,
+    "topics": 213
+  },
+  "source": "research-square-demo-v1.zip"
+}

@@ -1,0 +1,68 @@
+{
+  "/healthz": {
+    "status": "ok",
+    "seconds": 0.0
+  },
+  "/research-square/openalex/overview?days=3650": {
+    "status": 200,
+    "seconds": 3.36,
+    "stats": {
+      "works": 30000,
+      "citations": 27523,
+      "open_access": 26121,
+      "topics": 4173
+    }
+  },
+  "/research-square/openalex/enrichment-status": {
+    "status": 200,
+    "seconds": 0.02,
+    "works": 30000,
+    "topics": 4244,
+    "enriched_topics": 4244,
+    "topic_needs_review": 38,
+    "low_confidence_works": 3136,
+    "reviewed_works": 3136,
+    "work_needs_review": 1712,
+    "topic_progress": 100.0,
+    "review_progress": 100.0,
+    "latest_run": {
+      "public_id": "b6fd42df7ac34277ba4d37c57b8d1380",
+      "status": "completed",
+      "model_id": "deepseek-flash",
+      "enriched_topics": 0,
+      "reviewed_works": 0,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "started_at": "2026-11-06T12:18:04.389935+00:00",
+      "completed_at": "2026-11-06T12:18:05.346881+00:00",
+      "error_message": null
+    }
+  },
+  "/research-square/overview?days=365": {
+    "status": 200,
+    "seconds": 0.02,
+    "stats": {
+      "researches": 42,
+      "authors": 2,
+      "views": 0,
+      "likes": 0
+    }
+  },
+  "/research-square/researches?limit=1": {
+    "status": 200,
+    "seconds": 0.0,
+    "total": 42
+  },
+  "/research-square/openalex/graph?days=365": {
+    "status": 200,
+    "seconds": 2.28,
+    "nodes": 40,
+    "edges": 44
+  },
+  "/research-square/graph?days=365": {
+    "status": 200,
+    "seconds": 0.03,
+    "nodes": 40,
+    "edges": 49
+  }
+}

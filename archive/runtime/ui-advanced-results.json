@@ -1,0 +1,27 @@
+[
+  {
+    "name": "split-documents",
+    "pass": true
+  },
+  {
+    "name": "resize-split",
+    "before": "552",
+    "after": "568"
+  },
+  {
+    "name": "quality-jump",
+    "focused": 1
+  },
+  {
+    "name": "quality-sheet",
+    "length": 801
+  },
+  {
+    "name": "personal-canvas",
+    "pass": true
+  },
+  {
+    "name": "academic-canvas",
+    "pass": true
+  }
+]

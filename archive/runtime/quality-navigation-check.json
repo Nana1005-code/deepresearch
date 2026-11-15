@@ -1,0 +1,555 @@
+{
+  "summary": {
+    "passed": true,
+    "runs": 3,
+    "issueClicks": 30,
+    "referenceClicks": 55,
+    "citationClicks": 56,
+    "unit": {
+      "crossNode": true,
+      "sectionScopedLinks": true,
+      "meaningfulQuery": true,
+      "markersPreserved": true,
+      "domRestored": true
+    }
+  },
+  "checks": [
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "issue",
+      "finding": "missing_conclusion",
+      "located": "4.8 趋势判断\n主流方向为混合/互补方案（prompt/reasoning + retrieval + model-centric）；新兴方向包括知识接地微调、检索—生成混合管线"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "issue",
+      "finding": "no_inline_citations",
+      "located": "基准覆盖碎片化：CIEM、EMMA、Merlim 的具体度量定义与开源状态不完整；T2I 方向指标（T2I-CompBench、T2I-FactualBench、WISE）细节仅停"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 0,
+      "located": "https://arxiv.org/html/2410.15359v2"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 1,
+      "located": "https://www.alphaxiv.org/abs/2507.19024"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 2,
+      "located": "https://aclanthology.org/2023.emnlp-main.20.pdf"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 3,
+      "located": "https://evalscope.readthedocs.io/en/v1.13.0/benchmarks/pope.html"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 4,
+      "located": "https://github.com/showlab/awesome-mllm-hallucination"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 5,
+      "located": "https://openaccess.thecvf.com/content/CVPR2025/papers/Yang_Mitigating_Hallucinations_in_La"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 6,
+      "located": "https://bmva-archive.org.uk/bmvc/2025/assets/papers/Paper_666/paper.pdf"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 7,
+      "located": "https://arxiv.org/html/2505.07172v1"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 8,
+      "located": "https://icml.cc/virtual/2026/poster/62729"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 9,
+      "located": "http://papers.nips.cc/paper_files/paper/2025/hash/f39cc9110544a067f024c1fb8b396128-Abstrac"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 10,
+      "located": "https://neurips.cc/virtual/2025/poster/118235"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 11,
+      "located": "https://www.alphaxiv.org/abs/2504.10020v1"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 12,
+      "located": "https://www.emergentmind.com/topics/contrastive-decoding-strategies"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 13,
+      "located": "https://www.nature.com/articles/s41598-026-69199-7"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 14,
+      "located": "https://futureagi.com/blog/exploring-how-multimodal-large-language-models-work"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 15,
+      "located": "https://www.nature.com/articles/s41598-026-52390-1"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 16,
+      "located": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13153193"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 17,
+      "located": "https://cdn.amazon.science/bd/e4/c9c324de4417ae9e10e77d8f4d44/icml2026-gift-3.pdf"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 18,
+      "located": "https://arxiv.org/html/2506.01850v2"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 19,
+      "located": "https://arxiv.org/html/2510.06265v1"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 20,
+      "located": "https://www.mdpi.com/2673-2688/6/10/260"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 21,
+      "located": "https://zylos.ai/research/2026-01-27-llm-hallucination-detection-mitigation"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 22,
+      "located": "https://medium.com/@arghya05/the-battle-against-ai-hallucinations-a-deep-dive-into-mitigat"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "type": "reference",
+      "index": 23,
+      "located": "https://www.alphaxiv.org/abs/2401.01313"
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "citationsLocated": 25,
+      "references": 24
+    },
+    {
+      "run": "f1bc957e273a474e815a4914b2136b7e",
+      "eventsUnchanged": true
+    },
+    {
+      "run": "4cfe250a7371495b86347ff854dbaf95",
+      "type": "issue",
+      "finding": "domain_concentration",
+      "located": "P0验收：Python asyncio 的主要用途"
+    },
+    {
+      "run": "4cfe250a7371495b86347ff854dbaf95",
+      "type": "issue",
+      "finding": "missing_conclusion",
+      "located": "事件循环通常运行于主线程，任务串行调度；处理信号与子进程要求主线程；跨线程调用限制较多，误用阻塞调用将拖慢整体并发性能（任务 1）。"
+    },
+    {
+      "run": "4cfe250a7371495b86347ff854dbaf95",
+      "type": "issue",
+      "finding": "no_inline_citations",
+      "located": "低层用途：事件循环管理、transports/protocols 协议实现、Future 桥接旧回调代码（任务 1）。"
+    },
+    {
+      "run": "4cfe250a7371495b86347ff854dbaf95",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "P0验收：Python asyncio 的主要用途"
+    },
+    {
+      "run": "4cfe250a7371495b86347ff854dbaf95",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "P0验收：Python asyncio 的主要用途"
+    },
+    {
+      "run": "4cfe250a7371495b86347ff854dbaf95",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "P0验收：Python asyncio 的主要用途"
+    },
+    {
+      "run": "4cfe250a7371495b86347ff854dbaf95",
+      "type": "reference",
+      "index": 0,
+      "located": "https://docs.python.org/zh-cn/3.12/library/asyncio.html"
+    },
+    {
+      "run": "4cfe250a7371495b86347ff854dbaf95",
+      "type": "reference",
+      "index": 1,
+      "located": "https://docs.python.org/zh-cn/3.12/library/asyncio-dev.html"
+    },
+    {
+      "run": "4cfe250a7371495b86347ff854dbaf95",
+      "citationsLocated": 2,
+      "references": 2
+    },
+    {
+      "run": "4cfe250a7371495b86347ff854dbaf95",
+      "eventsUnchanged": true
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "unverified_url",
+      "located": "https://www.gasgoo.com/robot/news/70472097"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "unverified_url",
+      "located": "https://www.rokae.com/cn/news/show/2380/"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "unverified_url",
+      "located": "https://www.xuexiaigc.com/aigcnews/"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "missing_conclusion",
+      "located": "评测不可横向对比问题，以及幻觉、鲁棒性、安全的可复核评测标准缺失。"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "missing_reference_url",
+      "located": "定向检索 2026 年 NeurIPS/ICML/CVPR/ACL 2026 及 GPT/Gemini/Qwen 系最新技术报告与 arXiv 2026 新综述，坐实\"原生多模态统"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "missing_reference_url",
+      "located": "定向检索 OS-World、UI-TARS、Computer-Use 类模型，补齐 GUI 操作类多模态 Agent 证据；"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "missing_reference_url",
+      "located": "定向检索 EU AI Office、网信办、NIST/州法条文与律所/智库解读，补齐监管治理与合规要点；"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "missing_reference_url",
+      "located": "定向检索图像/音视频水印、C2PA 内容凭证与溯源标准进展，补齐深度伪造治理证据。"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "no_inline_citations",
+      "located": "融合位置选择缺乏统一准则：early/intermediate/late 的取舍缺少\"任务风险—算力预算\"匹配的统一准则；桥接/适配阶段\"数据规模 vs 数据配比\"的真实边际收益已"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "issue",
+      "finding": "uncited_source",
+      "located": "多模态大模型 2026 年研究现状研究报告"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 0,
+      "located": "https://pdf.hanspub.org/airr_2610822.pdf"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 1,
+      "located": "https://aclanthology.org/2024.ccl-2.1.pdf"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 2,
+      "located": "https://zhuanlan.zhihu.com/p/703468054"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 3,
+      "located": "https://www.cnblogs.com/Orzjh/p/19369341"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 4,
+      "located": "https://www.sciengine.com/sci-open/doi/pdf/0BB7C26BD04B4B658C045B1D3219C9A6"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 5,
+      "located": "https://www.hkubs.hku.hk/aimodelrankings_en/report/multimodal-image-understanding-2026.pdf"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 6,
+      "located": "https://www.qbitai.com/2024/10/213657.html"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 7,
+      "located": "https://evalscope.readthedocs.io/zh-cn/v1.1.0/get_started/supported_dataset/vlm.html"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 8,
+      "located": "https://intl.cloud.baidu.com/zh/article/8753757"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 9,
+      "located": "https://pdf.dfcfw.com/pdf/H3_AP202410121640274768_1.pdf"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 10,
+      "located": "https://zylos.ai/research/2026-01-13-multimodal-ai-vision-language-models"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 11,
+      "located": "https://einfer-mllm.github.io/Tutorial-ECCV-26"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 12,
+      "located": "https://v-chandra.github.io/on-device-llms"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 13,
+      "located": "https://github.com/SuDIS-ZJU/Efficient-LVLMs-Inference"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 14,
+      "located": "https://aclanthology.org/2026.emnlp-main.648.pdf"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 15,
+      "located": "https://www.gasgoo.com/robot/news/70472097"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 16,
+      "located": "https://www.xuexiaigc.com/aigcnews/"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 17,
+      "located": "https://www.rokae.com/cn/news/show/2380/"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 18,
+      "located": "https://hub.baai.ac.cn/view/50164"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 19,
+      "located": "https://hub.baai.ac.cn/view/49193"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 20,
+      "located": "https://arxiv.org/html/2601.15698v1"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 21,
+      "located": "https://zhuanlan.zhihu.com/p/1990494379757035868"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 22,
+      "located": "https://github.com/wuyoscar/AISafetyHot-Hub/blob/main/papers/2026/2026-10-09.md"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 23,
+      "located": "https://www.ndss-symposium.org/wp-content/uploads/2026-f808-paper.pdf"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 24,
+      "located": "https://cvpr.thecvf.com/virtual/2026/poster/39080"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 25,
+      "located": "定向检索 2026 年 NeurIPS/ICML/CVPR/ACL 2026 及 GPT/Gemini/Qwen 系最新技术报告与 arXiv 2026 新综述，坐实\"原生多模态统"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 26,
+      "located": "定向检索 OS-World、UI-TARS、Computer-Use 类模型，补齐 GUI 操作类多模态 Agent 证据；"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 27,
+      "located": "定向检索 EU AI Office、网信办、NIST/州法条文与律所/智库解读，补齐监管治理与合规要点；"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "type": "reference",
+      "index": 28,
+      "located": "定向检索图像/音视频水印、C2PA 内容凭证与溯源标准进展，补齐深度伪造治理证据。"
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "citationsLocated": 29,
+      "references": 29
+    },
+    {
+      "run": "9dd4202ad348420a94375af66c23f153",
+      "eventsUnchanged": true
+    }
+  ]
+}

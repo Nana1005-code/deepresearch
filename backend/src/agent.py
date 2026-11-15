@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import re
+from time import perf_counter
 from pathlib import Path
 from queue import Empty, Queue
 from threading import Lock, Thread
@@ -11,6 +12,7 @@ from typing import Any, Callable, Iterator
 
 from hello_agents import HelloAgentsLLM, ToolAwareSimpleAgent
 from services.llm import ResearchLLM, ModelOutputError, require_text
+from services.tool_agent import ResearchToolAgent
 from hello_agents.tools import ToolRegistry
 from hello_agents.tools.builtin.note_tool import NoteTool
 
@@ -73,13 +75,18 @@ class DeepResearchAgent:
         self.summarizer = SummarizationService(self._summarizer_factory, self.config)
         self.reporting = ReportingService(self.report_agent, self.config)
         self._last_search_notices: list[str] = []
+        # 本地文献库
+        self.document_library = None
+
+        # 本次研究选中的文献 ID
+        self.local_document_ids: list[str] = []
 
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
     def _init_llm(self) -> HelloAgentsLLM:
         """Instantiate HelloAgentsLLM following configuration preferences."""
-        llm_kwargs: dict[str, Any] = {"temperature": 0.0, "max_tokens": self.config.llm_max_tokens}
+        llm_kwargs: dict[str, Any] = {"temperature": self.config.llm_temperature, "max_tokens": self.config.llm_max_tokens, "timeout": self.config.llm_timeout}
 
         model_id = self.config.llm_model_id or self.config.local_llm
         if model_id:
@@ -109,7 +116,7 @@ class DeepResearchAgent:
 
     def _create_tool_aware_agent(self, *, name: str, system_prompt: str) -> ToolAwareSimpleAgent:
         """Instantiate a ToolAwareSimpleAgent sharing tool registry and tracker."""
-        return ToolAwareSimpleAgent(
+        return ResearchToolAgent(
             name=name,
             llm=self.llm,
             system_prompt=system_prompt,
@@ -165,7 +172,24 @@ class DeepResearchAgent:
         logger.debug("Starting streaming research: topic=%s", topic)
         yield {"type": "status", "message": "初始化研究流程"}
 
-        state.todo_items = self.planner.plan_todo_list(state)
+        yield {"type": "phase", "phase": "planning", "status": "started"}
+        query_failures = []
+        seed = getattr(self, 'resume_tasks', None)
+        if seed is None:
+            state.todo_items = self.planner.plan_todo_list(state)
+        else:
+            state.todo_items = [TodoItem(**{k:v for k,v in t.items() if k in TodoItem.__dataclass_fields__}) for t in seed]
+            for task in state.todo_items:
+                if self._cancelled(): return
+                if task.status == 'pending' and not task.query:
+                    try:
+                        task.query = self.llm.invoke([{'role':'system','content':'根据研究主题、任务标题和研究要求，生成一条适合网络搜索的查询。只输出搜索查询，不输出解释。'}, {'role':'user','content':f'研究主题：{topic}\n任务标题：{task.title}\n研究要求：{task.intent}'}]).strip()
+                    except Exception as exc:
+                        if self._cancelled(): return
+                        task.status='failed';task.error='搜索词生成失败：'+_safe_error(exc)
+                        query_failures.append(task)
+        if self._cancelled(): return
+        yield {"type": "phase", "phase": "planning", "status": "finished"}
         for event in self._drain_tool_events(state, step=0):
             yield event
         if not state.todo_items:
@@ -182,6 +206,9 @@ class DeepResearchAgent:
             "tasks": [self._serialize_task(t) for t in state.todo_items],
             "step": 0,
         }
+
+        for task in query_failures:
+            yield {'type':'task_status','task_id':task.id,'status':'failed','detail':task.error}
 
         event_queue: Queue[dict[str, Any]] = Queue()
 
@@ -250,18 +277,23 @@ class DeepResearchAgent:
             finally:
                 enqueue({"type": "__task_done__", "task_id": task.id})
 
+        yield {"type": "phase", "phase": "execution", "status": "started"}
         for task in state.todo_items:
+            if self._cancelled(): break
+            if task.status != 'pending': continue
             step = channel_map.get(task.id, {}).get("step", 0)
             thread = Thread(target=worker, args=(task, step), daemon=True)
             threads.append(thread)
             thread.start()
 
-        active_workers = len(state.todo_items)
+        active_workers = len(threads)
         finished_workers = 0
 
         try:
             while finished_workers < active_workers:
-                event = event_queue.get()
+                if self._cancelled(): return
+                try: event = event_queue.get(timeout=.2)
+                except Empty: continue
                 if event.get("type") == "__task_done__":
                     finished_workers += 1
                     continue
@@ -277,19 +309,28 @@ class DeepResearchAgent:
         finally:
             self._set_tool_event_sink(None)
             for thread in threads:
-                thread.join()
+                if not self._cancelled(): thread.join()
 
+        if self._cancelled(): return
+        yield {"type": "phase", "phase": "execution", "status": "finished"}
         if not any(task.status == "completed" for task in state.todo_items):
             yield {"type": "error", "detail": "所有子任务均失败或没有搜索结果，未生成报告。请查看各任务的系统提示。"}
             yield {"type": "done"}
             return
+        yield {"type": "phase", "phase": "report", "status": "started"}
+        report_failed = False
         try:
             report = self.reporting.generate_report(state)
         except ModelOutputError as exc:
+            report_failed = True
             logger.error("Final report failed: %s", exc)
             yield {"type": "error", "detail": str(exc)}
+        finally:
+            yield {"type": "phase", "phase": "report", "status": "finished"}
+        if report_failed:
             yield {"type": "done"}
             return
+        if self._cancelled(): return
         final_step = len(state.todo_items) + 1
         for event in self._drain_tool_events(state, step=final_step):
             yield event
@@ -311,6 +352,10 @@ class DeepResearchAgent:
     # ------------------------------------------------------------------
     # Execution helpers
     # ------------------------------------------------------------------
+    def _cancelled(self):
+        token = getattr(self, 'cancel_event', None)
+        return token is not None and token.is_set()
+
     def _execute_task(
         self,
         state: SummaryState,
@@ -320,24 +365,213 @@ class DeepResearchAgent:
         step: int | None = None,
     ) -> Iterator[dict[str, Any]]:
         """Run search + summarization for a single task."""
+        if self._cancelled(): return
         task.status = "in_progress"
 
-        search_result, notices, answer_text, backend = dispatch_search(
-            task.query,
-            self.config,
-            state.research_loop_count,
-        )
-        self._last_search_notices = notices
-        task.notices = notices
+        # search_started = perf_counter()
+        # if emit_stream:
+        #     yield {"type":"task_timing", "task_id":task.id, "phase":"search", "status":"started"}
+        # try:
+        #     search_result, notices, answer_text, backend = dispatch_search(
+        #         task.query,
+        #         self.config,
+        #         state.research_loop_count,
+        #     )
+        # finally:
+        #     if emit_stream:
+        #         yield {"type":"task_timing", "task_id":task.id, "phase":"search", "status":"finished", "elapsed":perf_counter()-search_started}
+        # if self._cancelled(): return
+        # self._last_search_notices = notices
+        # task.notices = notices
+        #
+        # if emit_stream:
+        #     for event in self._drain_tool_events(state, step=step):
+        #         yield event
+        # else:
+        #     self._drain_tool_events(state)
+        #
+        # if notices and emit_stream:
+        #     for notice in notices:
+        #         if notice:
+        #             yield {
+        #                 "type": "status",
+        #                 "message": notice,
+        #                 "task_id": task.id,
+        #                 "step": step,
+        #             }
+        #
+        # if not search_result or not search_result.get("results"):
+        #     task.status = "skipped"
+        #     task.notices.append("搜索正常结束但没有结果，此任务已跳过。")
+        #     if emit_stream:
+        #         for event in self._drain_tool_events(state, step=step):
+        #             yield event
+        #         yield {
+        #             "type": "task_status",
+        #             "task_id": task.id,
+        #             "status": "skipped",
+        #             "detail": "搜索正常结束但没有结果，此任务已跳过。",
+        #             "title": task.title,
+        #             "intent": task.intent,
+        #             "note_id": task.note_id,
+        #             "note_path": task.note_path,
+        #             "step": step,
+        #         }
+        #     else:
+        #         self._drain_tool_events(state)
+        #     return
+        # else:
+        #     if not emit_stream:
+        #         self._drain_tool_events(state)
+        #
+        # sources_summary, context = prepare_research_context(
+        #     search_result,
+        #     answer_text,
+        #     self.config,
+        # )
+        #
+        # task.sources_summary = sources_summary
+        #
+        # with self._state_lock:
+        #     state.web_research_results.append(context)
+        #     state.sources_gathered.append(sources_summary)
+        #     state.research_loop_count += 1
+
+
+        search_started = perf_counter()
 
         if emit_stream:
-            for event in self._drain_tool_events(state, step=step):
+            yield {
+                "type": "task_timing",
+                "task_id": task.id,
+                "phase": "search",
+                "status": "started"
+            }
+
+        # ==========================================
+        # 第一部分：检索本地文献
+        # ==========================================
+
+        local_hits = []
+        local_context = ""
+        local_sources_summary = ""
+
+        document_library = getattr(self, "document_library", None)
+        local_document_ids = getattr(self, "local_document_ids", None) or []
+
+        if (
+            document_library is not None
+            and local_document_ids
+        ):
+            try:
+                # 综合子任务标题、研究意图和搜索关键词
+                query = " ".join(
+                    part
+                    for part in (
+                        task.title,
+                        task.intent,
+                        task.query
+                    )
+                    if part
+                )
+
+                # 从用户选择的本地文献中检索相关内容
+                local_hits = document_library.search(
+                    query,
+                    document_ids=local_document_ids,
+                    top_k=6
+                )
+
+                # 整理检索结果和引用信息
+                (
+                    local_context,
+                    local_sources_summary
+                ) = document_library.format_context(
+                    local_hits
+                )
+
+            except Exception as exc:
+
+                logger.warning(
+                    "Local document retrieval failed: %s",
+                    _safe_error(exc)
+                )
+
+                task.notices.append(
+                    "本地文献检索失败，本任务将继续使用网络资料。"
+                )
+
+        # ==========================================
+        # 第二部分：检索互联网资料
+        # ==========================================
+
+        try:
+            try:
+                search_result, notices, answer_text, backend = dispatch_search(
+                    task.query,
+                    self.config,
+                    state.research_loop_count,
+                )
+
+            except Exception as exc:
+
+                # 如果网络搜索失败，但本地文献已经检索到内容，
+                # 则继续使用本地文献完成研究。
+                if not local_hits:
+                    raise
+
+                search_result = {"results": []}
+                answer_text = None
+                backend = "local-document"
+
+                notices = [
+                    f"网络检索暂不可用，已使用本地文献继续研究：{_safe_error(exc)}"
+                ]
+
+        finally:
+
+            if emit_stream:
+                yield {
+                    "type": "task_timing",
+                    "task_id": task.id,
+                    "phase": "search",
+                    "status": "finished",
+                    "elapsed": perf_counter() - search_started
+                }
+
+        if self._cancelled():
+            return
+
+        self._last_search_notices = notices
+
+        # 保留本地检索产生的提示信息
+        task.notices.extend(notices)
+
+        if local_hits:
+            task.notices.append(
+                f"已从 {len(local_document_ids)} 篇所选文献中召回 "
+                f"{len(local_hits)} 段相关内容。"
+            )
+
+        # ==========================================
+        # 第三部分：处理原有搜索工具事件
+        # ==========================================
+
+        if emit_stream:
+
+            for event in self._drain_tool_events(
+                state,
+                step=step
+            ):
                 yield event
+
         else:
             self._drain_tool_events(state)
 
         if notices and emit_stream:
+
             for notice in notices:
+
                 if notice:
                     yield {
                         "type": "status",
@@ -346,81 +580,151 @@ class DeepResearchAgent:
                         "step": step,
                     }
 
-        if not search_result or not search_result.get("results"):
+        # ==========================================
+        # 第四部分：判断是否有可用研究资料
+        # ==========================================
+
+        has_web_results = bool(
+            search_result
+            and search_result.get("results")
+        )
+
+        # 只有网络资料和本地资料都没有时才跳过任务
+        if not has_web_results and not local_hits:
+
             task.status = "skipped"
-            task.notices.append("搜索正常结束但没有结果，此任务已跳过。")
+
+            task.notices.append(
+                "网络搜索没有结果，所选本地文献也未召回相关内容；此任务已跳过。"
+            )
+
             if emit_stream:
-                for event in self._drain_tool_events(state, step=step):
+
+                for event in self._drain_tool_events(
+                    state,
+                    step=step
+                ):
                     yield event
+
                 yield {
                     "type": "task_status",
                     "task_id": task.id,
                     "status": "skipped",
-                    "detail": "搜索正常结束但没有结果，此任务已跳过。",
+                    "detail": "网络搜索和本地文献均未获得可用资料。",
                     "title": task.title,
                     "intent": task.intent,
                     "note_id": task.note_id,
                     "note_path": task.note_path,
                     "step": step,
                 }
+
             else:
                 self._drain_tool_events(state)
+
             return
-        else:
-            if not emit_stream:
-                self._drain_tool_events(state)
+
+        elif not emit_stream:
+            self._drain_tool_events(state)
+
+        # ==========================================
+        # 第五部分：整理网络搜索资料
+        # ==========================================
 
         sources_summary, context = prepare_research_context(
-            search_result,
+            search_result or {"results": []},
             answer_text,
             self.config,
         )
 
+        # ==========================================
+        # 第六部分：合并本地文献和网络资料
+        # ==========================================
+
+        if local_context:
+
+            context = "\n\n".join(
+                part
+                for part in (
+                    context,
+                    local_context
+                )
+                if part
+            )
+
+            sources_summary = "\n".join(
+                part
+                for part in (
+                    sources_summary,
+                    local_sources_summary
+                )
+                if part
+            )
+
+        # 保存本任务的全部来源
         task.sources_summary = sources_summary
 
+        # ==========================================
+        # 第七部分：更新研究状态
+        # ==========================================
+
         with self._state_lock:
+
             state.web_research_results.append(context)
-            state.sources_gathered.append(sources_summary)
-            state.research_loop_count += 1
 
-        summary_text: str | None = None
+            state.sources_gathered.append(
+                sources_summary
+            )
 
+            if has_web_results:
+                state.research_loop_count += 1
+
+
+        summary_started = perf_counter()
         if emit_stream:
-            for event in self._drain_tool_events(state, step=step):
-                yield event
-            yield {
-                "type": "sources",
-                "task_id": task.id,
-                "latest_sources": sources_summary,
-                "raw_context": context,
-                "step": step,
-                "backend": backend,
-                "note_id": task.note_id,
-                "note_path": task.note_path,
-            }
+            yield {"type":"task_timing", "task_id":task.id, "phase":"summary", "status":"started"}
+        try:
+            summary_text: str | None = None
 
-            summary_stream, summary_getter = self.summarizer.stream_task_summary(state, task, context)
-            try:
+            if emit_stream:
                 for event in self._drain_tool_events(state, step=step):
                     yield event
-                for chunk in summary_stream:
-                    if chunk:
-                        yield {
-                            "type": "task_summary_chunk",
-                            "task_id": task.id,
-                            "content": chunk,
-                            "note_id": task.note_id,
-                            "step": step,
-                        }
+                yield {
+                    "type": "sources",
+                    "task_id": task.id,
+                    "latest_sources": sources_summary,
+                    "raw_context": context,
+                    "step": step,
+                    "backend": backend,
+                    "note_id": task.note_id,
+                    "note_path": task.note_path,
+                }
+
+                summary_stream, summary_getter = self.summarizer.stream_task_summary(state, task, context)
+                try:
                     for event in self._drain_tool_events(state, step=step):
                         yield event
-            except ModelOutputError as exc:
-                raise ModelOutputError(f"任务总结失败：{exc}") from exc
-            summary_text = summary_getter()
-        else:
-            summary_text = self.summarizer.summarize_task(state, task, context)
-            self._drain_tool_events(state)
+                    for chunk in summary_stream:
+                        if chunk:
+                            yield {
+                                "type": "task_summary_chunk",
+                                "task_id": task.id,
+                                "content": chunk,
+                                "note_id": task.note_id,
+                                "step": step,
+                            }
+                        for event in self._drain_tool_events(state, step=step):
+                            yield event
+                except ModelOutputError as exc:
+                    raise ModelOutputError(f"任务总结失败：{exc}") from exc
+                summary_text = summary_getter()
+            else:
+                summary_text = self.summarizer.summarize_task(state, task, context)
+                self._drain_tool_events(state)
+        finally:
+            if emit_stream:
+                yield {"type":"task_timing", "task_id":task.id, "phase":"summary", "status":"finished", "elapsed":perf_counter()-summary_started}
 
+        if self._cancelled(): return
         task.summary = require_text(summary_text, "任务总结")
         task.status = "completed"
 

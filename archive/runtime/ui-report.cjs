@@ -1,0 +1,3 @@
+const {chromium}=require('C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});try{const p=await b.newPage({viewport:{width:1600,height:1000}});await p.goto('http://127.0.0.1:5174/');await p.locator('button').filter({hasText:'探究多模态大模型在2026年的研究现状'}).filter({hasText:'已完成'}).click();await p.waitForTimeout(1000);console.log((await p.locator('body').innerText()).slice(0,6000));console.log('BUTTONS',await p.locator('button:visible').allTextContents());await p.screenshot({path:'.runtime/report.png'});}finally{await b.close()}})().catch(e=>{console.error(e);process.exit(1)});
+

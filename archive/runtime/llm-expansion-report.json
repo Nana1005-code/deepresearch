@@ -1,0 +1,253 @@
+{
+  "directions": [],
+  "failed": [],
+  "before": 31141,
+  "after": 31141,
+  "coverage": [
+    {
+      "id": "concept-agents",
+      "name": "智能体与工具调用",
+      "papers": 47
+    },
+    {
+      "id": "concept-alignment",
+      "name": "偏好对齐",
+      "papers": 85
+    },
+    {
+      "id": "concept-audio",
+      "name": "音频模型",
+      "papers": 15
+    },
+    {
+      "id": "concept-benchmark",
+      "name": "模型评测",
+      "papers": 709
+    },
+    {
+      "id": "concept-bias",
+      "name": "偏见与公平性",
+      "papers": 45
+    },
+    {
+      "id": "concept-caption",
+      "name": "图像描述",
+      "papers": 13
+    },
+    {
+      "id": "concept-code",
+      "name": "代码生成",
+      "papers": 29
+    },
+    {
+      "id": "concept-cot",
+      "name": "思维链",
+      "papers": 77
+    },
+    {
+      "id": "concept-distillation",
+      "name": "知识蒸馏",
+      "papers": 29
+    },
+    {
+      "id": "concept-document",
+      "name": "文档理解",
+      "papers": 8
+    },
+    {
+      "id": "concept-embodied",
+      "name": "具身智能",
+      "papers": 55
+    },
+    {
+      "id": "concept-emotion",
+      "name": "多模态情绪识别",
+      "papers": 15
+    },
+    {
+      "id": "concept-grounding",
+      "name": "视觉定位与指代",
+      "papers": 17
+    },
+    {
+      "id": "concept-hallucination",
+      "name": "幻觉检测",
+      "papers": 164
+    },
+    {
+      "id": "concept-hallucination-mitigation",
+      "name": "幻觉缓解",
+      "papers": 170
+    },
+    {
+      "id": "concept-instruction",
+      "name": "指令微调",
+      "papers": 44
+    },
+    {
+      "id": "concept-llm",
+      "name": "大语言模型",
+      "papers": 1422
+    },
+    {
+      "id": "concept-long-context",
+      "name": "长上下文",
+      "papers": 37
+    },
+    {
+      "id": "concept-math",
+      "name": "数学推理",
+      "papers": 21
+    },
+    {
+      "id": "concept-medical",
+      "name": "医学大模型",
+      "papers": 195
+    },
+    {
+      "id": "concept-mllm",
+      "name": "多模态大模型",
+      "papers": 457
+    },
+    {
+      "id": "concept-mm-retrieval",
+      "name": "多模态检索",
+      "papers": 12
+    },
+    {
+      "id": "concept-moe",
+      "name": "混合专家模型",
+      "papers": 30
+    },
+    {
+      "id": "concept-multilingual",
+      "name": "多语言模型",
+      "papers": 63
+    },
+    {
+      "id": "concept-music",
+      "name": "音乐理解与生成",
+      "papers": 3
+    },
+    {
+      "id": "concept-ner",
+      "name": "命名实体识别",
+      "papers": 34
+    },
+    {
+      "id": "concept-omni",
+      "name": "全模态大模型",
+      "papers": 40
+    },
+    {
+      "id": "concept-peft",
+      "name": "参数高效微调",
+      "papers": 38
+    },
+    {
+      "id": "concept-pretraining",
+      "name": "预训练",
+      "papers": 96
+    },
+    {
+      "id": "concept-privacy",
+      "name": "隐私保护",
+      "papers": 85
+    },
+    {
+      "id": "concept-qa",
+      "name": "问答系统",
+      "papers": 89
+    },
+    {
+      "id": "concept-quantization",
+      "name": "模型量化",
+      "papers": 40
+    },
+    {
+      "id": "concept-rag",
+      "name": "检索增强生成",
+      "papers": 82
+    },
+    {
+      "id": "concept-reasoning",
+      "name": "推理能力",
+      "papers": 347
+    },
+    {
+      "id": "concept-relation",
+      "name": "关系抽取",
+      "papers": 30
+    },
+    {
+      "id": "concept-safety",
+      "name": "模型安全与越狱",
+      "papers": 41
+    },
+    {
+      "id": "concept-sarcasm",
+      "name": "讽刺检测",
+      "papers": 51
+    },
+    {
+      "id": "concept-sentiment",
+      "name": "情感分析",
+      "papers": 63
+    },
+    {
+      "id": "concept-speech",
+      "name": "语音识别",
+      "papers": 38
+    },
+    {
+      "id": "concept-speech-dialogue",
+      "name": "语音对话",
+      "papers": 14
+    },
+    {
+      "id": "concept-stance",
+      "name": "立场检测",
+      "papers": 34
+    },
+    {
+      "id": "concept-summarization",
+      "name": "文本摘要",
+      "papers": 44
+    },
+    {
+      "id": "concept-text-classification",
+      "name": "文本分类",
+      "papers": 24
+    },
+    {
+      "id": "concept-translation",
+      "name": "机器翻译",
+      "papers": 29
+    },
+    {
+      "id": "concept-tts",
+      "name": "语音合成",
+      "papers": 30
+    },
+    {
+      "id": "concept-uncertainty",
+      "name": "不确定性与置信度",
+      "papers": 81
+    },
+    {
+      "id": "concept-video",
+      "name": "视频理解",
+      "papers": 33
+    },
+    {
+      "id": "concept-vla",
+      "name": "视觉语言动作模型",
+      "papers": 20
+    },
+    {
+      "id": "concept-vqa",
+      "name": "视觉问答",
+      "papers": 35
+    }
+  ]
+}

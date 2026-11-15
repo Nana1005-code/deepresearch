@@ -1,0 +1,47 @@
+{
+  "chat": {
+    "status": 200,
+    "body": {
+      "id": "03a9d9a5307d44d2ace8c6b13eab3852",
+      "run_id": null,
+      "title": "请只回复测试成功。",
+      "created_at": "2026-11-15T10:01:41.246620+00:00",
+      "updated_at": "2026-11-15T10:01:45.068988+00:00",
+      "messages": [
+        {
+          "role": "user",
+          "content": "请只回复测试成功。",
+          "quote": "",
+          "quote_source": null,
+          "context_source": null,
+          "created_at": "2026-11-15T10:01:41.280335+00:00",
+          "model_profile_id": "5357b6b870cc460fb4593a7be68d98d9",
+          "model_name": "DeepSeek Flash",
+          "model_id": "deepseek/deepseek-v4.1-flash",
+          "api_base_url": "https://api.tokenplus.cn/v1"
+        },
+        {
+          "role": "assistant",
+          "content": "测试成功",
+          "created_at": "2026-11-15T10:01:45.068988+00:00",
+          "model_profile_id": "5357b6b870cc460fb4593a7be68d98d9",
+          "model_name": "DeepSeek Flash",
+          "model_id": "deepseek/deepseek-v4.1-flash",
+          "api_base_url": "https://api.tokenplus.cn/v1"
+        }
+      ],
+      "status": "idle",
+      "error": null
+    }
+  },
+  "research_submit": {
+    "status": 202,
+    "id": "08b27e78bd334bba943626c947046ed3"
+  },
+  "graph_import": {
+    "state": "failed",
+    "message": "导入失败，请检查模型 API 后重试",
+    "research_public_id": "9a35018433d843499a2e4c058140da56",
+    "error": "Error code: 401 - {'error': {'code': '', 'message': 'Invalid token (request id: 202611150956297751146598268d9d6v61NhQvy)', 'type': 'new_api_error'}}"
+  }
+}

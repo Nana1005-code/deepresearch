@@ -1,0 +1,391 @@
+[
+  {
+    "name": "health",
+    "status": "PASS",
+    "detail": {
+      "status": "ok"
+    }
+  },
+  {
+    "name": "history",
+    "status": "PASS",
+    "detail": {
+      "runs": 4,
+      "events": 69,
+      "report_chars": 12058
+    }
+  },
+  {
+    "name": "quality-audit-report-readonly",
+    "status": "PASS",
+    "detail": {
+      "score": 85,
+      "grade": "B",
+      "issues": 5,
+      "read_only": true,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "word-export",
+    "status": "PASS",
+    "detail": {
+      "bytes": 47683,
+      "paragraphs": 125
+    }
+  },
+  {
+    "name": "notes-CRUD",
+    "status": "PASS",
+    "detail": "create/read/update/delete passed"
+  },
+  {
+    "name": "highlights",
+    "status": "PASS",
+    "detail": "highlight saved and cleared"
+  },
+  {
+    "name": "local-documents",
+    "status": "PASS",
+    "detail": {
+      "formats": [
+        "acceptance.txt",
+        "acceptance.md",
+        "acceptance.docx"
+      ],
+      "duplicate": 409,
+      "unsupported": 400,
+      "roundtrip": true
+    }
+  },
+  {
+    "name": "openalex-metadata",
+    "status": "PASS",
+    "detail": {
+      "stats": {
+        "works": 10,
+        "citations": 0,
+        "open_access": 8,
+        "topics": 27
+      },
+      "hot_topics": [
+        {
+          "public_id": "T12522",
+          "name": "Mathematics Education and Pedagogy",
+          "original_name": "Mathematics Education and Pedagogy",
+          "research_count": 2,
+          "citations": 0,
+          "average_score": 0.028750000521540642,
+          "heat": 2
+        },
+        {
+          "public_id": "T10007",
+          "name": "Monetary Policy and Economic Impact",
+          "original_name": "Monetary Policy and Economic Impact",
+          "research_count": 2,
+          "citations": 0,
+          "average_score": 0.5108499974012375,
+          "heat": 2
+        },
+        {
+          "public_id": "T10503",
+          "name": "Global Financial Crisis and Policies",
+          "original_name": "Global Financial Crisis and Policies",
+          "research_count": 2,
+          "citations": 0,
+          "average_score": 0.10730000026524067,
+          "heat": 2
+        },
+        {
+          "public_id": "T11875",
+          "name": "Statistics Education and Methodologies",
+          "original_name": "Statistics Education and Methodologies",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.92330002784729,
+          "heat": 1
+        },
+        {
+          "public_id": "T12884",
+          "name": "Educational Assessment and Pedagogy",
+          "original_name": "Educational Assessment and Pedagogy",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.013000000268220901,
+          "heat": 1
+        },
+        {
+          "public_id": "T10380",
+          "name": "Intimate Partner and Family Violence",
+          "original_name": "Intimate Partner and Family Violence",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.9940999746322632,
+          "heat": 1
+        },
+        {
+          "public_id": "T12235",
+          "name": "Child Abuse and Related Trauma",
+          "original_name": "Child Abuse and Related Trauma",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.0027000000700354576,
+          "heat": 1
+        },
+        {
+          "public_id": "T12462",
+          "name": "Elder Abuse and Neglect",
+          "original_name": "Elder Abuse and Neglect",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.0010999999940395355,
+          "heat": 1
+        },
+        {
+          "public_id": "T11675",
+          "name": "Open Source Software Innovations",
+          "original_name": "Open Source Software Innovations",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.5942000150680542,
+          "heat": 1
+        },
+        {
+          "public_id": "T10953",
+          "name": "E-Government and Public Services",
+          "original_name": "E-Government and Public Services",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.38769999146461487,
+          "heat": 1
+        },
+        {
+          "public_id": "T11499",
+          "name": "ICT Impact and Policies",
+          "original_name": "ICT Impact and Policies",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.0071000000461936,
+          "heat": 1
+        },
+        {
+          "public_id": "T10854",
+          "name": "Bipolar Disorder and Treatment",
+          "original_name": "Bipolar Disorder and Treatment",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.9970999956130981,
+          "heat": 1
+        },
+        {
+          "public_id": "T10352",
+          "name": "Physical Activity and Health",
+          "original_name": "Physical Activity and Health",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.0017000000225380063,
+          "heat": 1
+        },
+        {
+          "public_id": "T10023",
+          "name": "Schizophrenia research and treatment",
+          "original_name": "Schizophrenia research and treatment",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.00019999999494757503,
+          "heat": 1
+        },
+        {
+          "public_id": "T12948",
+          "name": "Inclusion and Disability in Education and Sport",
+          "original_name": "Inclusion and Disability in Education and Sport",
+          "research_count": 1,
+          "citations": 0,
+          "average_score": 0.9945999979972839,
+          "heat": 1
+        }
+      ],
+      "days": 365,
+      "domain_slug": null,
+      "source": "openalex"
+    }
+  },
+  {
+    "name": "openalex-graph",
+    "status": "PASS",
+    "detail": {
+      "nodes": [],
+      "edges": [],
+      "days": 365,
+      "domain_slug": null,
+      "source": "openalex"
+    }
+  },
+  {
+    "name": "graph-empty-state",
+    "status": "PASS",
+    "detail": {
+      "nodes": [],
+      "edges": [],
+      "days": 30,
+      "domain_slug": null
+    }
+  },
+  {
+    "name": "gap-helper-no-model",
+    "status": "PASS",
+    "detail": {
+      "plan": {
+        "intent": "find_research_gaps",
+        "source": "openalex_and_my_history"
+      },
+      "matched_topics": [],
+      "data": {
+        "error": "missing_topic",
+        "message": "没有识别到真实学术主题，请写出更明确的主题名称。"
+      },
+      "answer": "没有识别到真实学术主题，请写出更明确的主题名称。"
+    }
+  },
+  {
+    "name": "academic-helper-no-model",
+    "status": "PASS",
+    "detail": {
+      "plan": {
+        "intent": "rank_topics",
+        "metric": "heat",
+        "days": 30,
+        "limit": 10,
+        "domain_slug": null,
+        "topics": []
+      },
+      "matched_topics": [],
+      "data": {
+        "topics": [
+          {
+            "public_id": "T12522",
+            "name": "Mathematics Education and Pedagogy",
+            "original_name": "Mathematics Education and Pedagogy",
+            "research_count": 2,
+            "citations": 0,
+            "average_score": 0.028750000521540642,
+            "heat": 2
+          },
+          {
+            "public_id": "T10007",
+            "name": "Monetary Policy and Economic Impact",
+            "original_name": "Monetary Policy and Economic Impact",
+            "research_count": 2,
+            "citations": 0,
+            "average_score": 0.5108499974012375,
+            "heat": 2
+          },
+          {
+            "public_id": "T10503",
+            "name": "Global Financial Crisis and Policies",
+            "original_name": "Global Financial Crisis and Policies",
+            "research_count": 2,
+            "citations": 0,
+            "average_score": 0.10730000026524067,
+            "heat": 2
+          },
+          {
+            "public_id": "T11875",
+            "name": "Statistics Education and Methodologies",
+            "original_name": "Statistics Education and Methodologies",
+            "research_count": 1,
+            "citations": 0,
+            "average_score": 0.92330002784729,
+            "heat": 1
+          },
+          {
+            "public_id": "T12884",
+            "name": "Educational Assessment and Pedagogy",
+            "original_name": "Educational Assessment and Pedagogy",
+            "research_count": 1,
+            "citations": 0,
+            "average_score": 0.013000000268220901,
+            "heat": 1
+          },
+          {
+            "public_id": "T10380",
+            "name": "Intimate Partner and Family Violence",
+            "original_name": "Intimate Partner and Family Violence",
+            "research_count": 1,
+            "citations": 0,
+            "average_score": 0.9940999746322632,
+            "heat": 1
+          },
+          {
+            "public_id": "T12235",
+            "name": "Child Abuse and Related Trauma",
+            "original_name": "Child Abuse and Related Trauma",
+            "research_count": 1,
+            "citations": 0,
+            "average_score": 0.0027000000700354576,
+            "heat": 1
+          },
+          {
+            "public_id": "T12462",
+            "name": "Elder Abuse and Neglect",
+            "original_name": "Elder Abuse and Neglect",
+            "research_count": 1,
+            "citations": 0,
+            "average_score": 0.0010999999940395355,
+            "heat": 1
+          },
+          {
+            "public_id": "T11675",
+            "name": "Open Source Software Innovations",
+            "original_name": "Open Source Software Innovations",
+            "research_count": 1,
+            "citations": 0,
+            "average_score": 0.5942000150680542,
+            "heat": 1
+          },
+          {
+            "public_id": "T10953",
+            "name": "E-Government and Public Services",
+            "original_name": "E-Government and Public Services",
+            "research_count": 1,
+            "citations": 0,
+            "average_score": 0.38769999146461487,
+            "heat": 1
+          }
+        ],
+        "source": "openalex"
+      },
+      "answer": "统计范围：最近 30 天。\n1. Mathematics Education and Pedagogy：真实论文 2 条。\n2. Monetary Policy and Economic Impact：真实论文 2 条。\n3. Global Financial Crisis and Policies：真实论文 2 条。\n4. Statistics Education and Methodologies：真实论文 1 条。\n5. Educational Assessment and Pedagogy：真实论文 1 条。\n6. Intimate Partner and Family Violence：真实论文 1 条。\n7. Child Abuse and Related Trauma：真实论文 1 条。\n8. Elder Abuse and Neglect：真实论文 1 条。\n9. Open Source Software Innovations：真实论文 1 条。\n10. E-Government and Public Services：真实论文 1 条。"
+    }
+  },
+  {
+    "name": "personal-graph-submit",
+    "status": "PASS",
+    "detail": {
+      "ok": true,
+      "job": {
+        "id": 1,
+        "public_id": "a800e22115db4cc2a09045e54b92b32b",
+        "source_run_id": "dd27725b2d6f4902ac8b554d32f14996",
+        "model_profile_id": "5357b6b870cc460fb4593a7be68d98d9",
+        "status": "queued",
+        "research_public_id": null,
+        "error_message": null,
+        "created_at": "2026-11-15T09:56:29.621670+00:00",
+        "started_at": null,
+        "completed_at": null,
+        "updated_at": "2026-11-15T09:56:29.621670+00:00",
+        "already_exists": false,
+        "retried": false
+      },
+      "message": "已加入后台导入队列"
+    }
+  },
+  {
+    "name": "personal-graph-duplicate",
+    "status": "PASS",
+    "detail": {
+      "status": 409
+    }
+  }
+]

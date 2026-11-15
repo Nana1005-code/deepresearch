@@ -1,0 +1,253 @@
+<h1>多模态大模型 2026 年研究现状报告</h1>
+<h2>1. 背景概览</h2>
+<p>2026 年，多模态大模型（MLLM）已从"能看懂图的语言模型"演进为以**原生多模态（Native Multimodal Modeling, NMM）**为目标的独立研究范式。其重要性体现在三个层面：</p>
+<ul>
+<li><strong>架构层面</strong>：行业首次形式化了"原生性（nativity）"的判定标准，把过去含糊的"编码器 + 投影层 + LLM"描述替换为 late-fusion / mid-fusion / early-fusion 的三段式元框架（任务 1）。</li>
+<li><strong>训练层面</strong>：竞争焦点从参数规模转向数据配方、位置编码、后训练与强化学习范式的精细设计（任务 2）。</li>
+<li><strong>评测与落地层面</strong>：基准数量爆炸导致"排名分裂"，SOTA 宣称变为条件性结论；产业侧则呈现"窄域已交付、开放域仍试点"的哑铃型格局（任务 3、任务 4）。</li>
+</ul>
+<p>本报告整合 5 项子任务的检索与研判结果，其中任务 5（挑战与前沿）的笔记正文未回填，相关判断主要依据任务 3、任务 4 中的间接证据，已在相应位置标注。</p>
+<hr>
+<h2>2. 核心洞见</h2>
+<h3>洞见一：2026 年架构讨论的"元框架"已被形式化，UMM 与 NMM 必须严格区分（任务 1）</h3>
+<p>Tencent Youtu Lab 的 NMM Roadmap（arXiv:2605.25343，2026-05-25）首次对"原生性"给出形式化定义，将架构谱系切分为：</p>
+<ul>
+<li><strong>Late-fusion</strong>：解耦的 connect-and-generate，独立编码器 + 冻结语言骨干 + 嫁接式输出头，"盲于模态"的拼装；</li>
+<li><strong>Mid-fusion</strong>：具备跨模态洞察但保留显式模态感知边界；</li>
+<li><strong>Early-fusion</strong>：所有模态在共享嵌入空间由原生 Transformer 处理，"born native: all as one"。</li>
+</ul>
+<p>并用输入-输出对偶性区分 <strong>M2T</strong>（多模态到文本）、<strong>M2G</strong>（多模态到场景化生成）、<strong>M2M</strong>（多模态到多模态）。OpenEnvision 模型库进一步划出 Traditional → MLLM → UMM（能力统一）→ NMM（架构原生）四段式。这一框架解决了长期存在的术语滥用问题——"unified"曾泛指"能出图的理解模型"，现在必须区分"能力统一"与"架构原生"，后者直接决定实验对照组与训练配方的选取基准。</p>
+<h3>洞见二：统一 token 空间的 M2M 对称建模是主战场，但呈"三足鼎立"而非单一路线（任务 1）</h3>
+<p>M2M 建模内部存在三条并行路线：</p>
+<ol>
+<li><strong>自回归 next-token prediction</strong>：Show-o → Show-o2、Emu3 → Emu3.5、Janus/JanusFlow（解耦视觉编码）、AnyGPT、BAGEL。优势是继承语言模型的简洁与可扩展性，代价是依赖精心设计的视觉 tokenizer。</li>
+<li><strong>扩散型统一模型</strong>：MMaDA、Omni-Diffusion（2026-03，掩码离散扩散）、LLaDA2.0-Uni（2026-04-22，首个公开的 MoE 掩码扩散统一模型）。论证逻辑是"扩散的双向上下文适配理解、迭代去噪擅长生成"。</li>
+<li><strong>混合（AR + Diffusion）与开放基线</strong>：OpenUni、BLIP3-o、InternVL-U（2026-03，理解/推理/生成/编辑四合一）、UniGen、Qwen VLo；ICML 2026《Beyond Language Modeling》做了 Transfusion 风格受控预训练研究。</li>
+</ol>
+<p>NMM Roadmap 在 M2M 下进一步区分 <strong>Fully Discretized Unified</strong> 与 <strong>Modality-Specificity Preserving</strong> 两条子路线，把"统一 token 是否牺牲模态特性"这一根本争议显式化。三条路线的质量-效率前沿尚无定论，扩散路线的工程生态（KV cache、流式解码）成熟度仍落后。</p>
+<h3>洞见三：训练范式从"堆量"转向"配方"，位置编码回潮，RLVR 在多模态场景暴露感知瓶颈（任务 2）</h3>
+<ul>
+<li><strong>数据侧</strong>：ICLR 2026 一项 1T token、100+ 组对照实验、约 50 万 GPU 小时的预训练研究证明，能力对<strong>视觉编码器与视觉指令微调数据</strong>最敏感，而"描述视觉世界的文本数据"收益<strong>很快饱和</strong>。数据受限场景下，最优 weight decay 可达常规实践的 30 倍，说明数据课程必须与优化方法协同设计。</li>
+<li><strong>对齐侧</strong>：研究焦点从"连接器结构"转向"位置编码与表征保真"。<em>Revisiting Multimodal Positional Encoding</em> 提出位置一致性、全频段利用、文本先验保持三准则，并给出 MHRoPE 与 MRoPE-I 两个即插即用方案。</li>
+<li><strong>后训练</strong>：同济大学 + 阿里 Qwen 的 MMPoT 综述（2026-07 预印本）将其归为指令跟随、偏好校准、推理增强、领域适配、可扩展训练五类；演进路径为 PPO → DPO → GRPO。</li>
+<li><strong>RLVR 的多模态瓶颈</strong>：Perception-R1 通过 McNemar 检验证明现有 RLVR <strong>无法有效增强多模态感知</strong>，提出视觉感知奖励；DECS 指出长度惩罚"误罚探索 token、误奖冗余 token"两大缺陷，用解耦 token 级奖励 + 课程批次调度，在 7 个基准上推理 token 减少 50%+ 且性能不降。</li>
+</ul>
+<h3>洞见四：评测进入"基准通胀 + 排名分裂"阶段，任何 SOTA 结论都是条件性的（任务 3）</h3>
+<p>BenchLM（数据刷新 2026-10-26）追踪 <strong>993 个模型、710 个基准</strong>；Multimodal &amp; Grounded 单类挂载 32 个基准，但仅 <strong>4 个（约 12.5%）</strong> 进入加权证据集。provisional-ranked（58/993）与 verified-ranked（57/993）双口径导致同一模型排名漂移。更极端的是跨平台不可比：llm-stats 上 MMBench-Video 仅 3 个模型、均分 0.0、最高 0.020，与 BenchLM 90+ 高分形成强烈反差，提示归一化、评分脚本、任务映射存在系统性不一致。</p>
+<p><strong>工程含义</strong>：引用"2026 年多模态 SOTA"必须同时报告<strong>基准版本、证据模式、评测时间戳</strong>三要素，否则结论不可复现。同时，能力硬边界清晰可见：ZeroBench（"不可能基准"）上 Kimi K3.1 Pro 仅 39.0%、Qwen3.8 Max 24.0%，加权 98 分并不代表能力均衡。</p>
+<h3>洞见五：产业落地呈"哑铃型"，真正瓶颈是价值衰减与"时延-算力-隐私三角"，而非模型精度（任务 4）</h3>
+<ul>
+<li><strong>已交付端</strong>：美式手语实时翻译融合摄像头与肌电传感器达 <strong>94.5%</strong>；家庭园艺病害诊断总体准确率仅 <strong>54.5%</strong>，但相对单模态基线 <strong>+18.5%</strong>，在低光/遮挡等失效区间补位。</li>
+<li><strong>未交付端</strong>：开放域 Agent 仍受非确定性输出、长程信用分配、评估复杂度困扰。</li>
+<li><strong>价值衰减机制</strong>：TEMAI 框架在零售巡检与光伏巡检两个工业案例中测得"实验室高精度 → 现场低效用"，主因是<strong>场景迁移困难</strong>与<strong>组织技术吸收能力弱</strong>，属于部署问题而非模型问题。</li>
+<li><strong>三条可复制路径</strong>：边缘优先（Jetson Orin NX 本地处理较云端快 <strong>7.3×</strong>、EgoPrune 免训练 token 剪枝）、私有化离线（科大讯飞 All-in-One，媒体转写准确率 +85%、效率 3×）、弹性 Serverless（Vultr 部署 NVIDIA Nemotron 3 Nano Omni，2026-04-28）。</li>
+<li><strong>选型第一性问题</strong>应为"时延预算 + 数据出境合规 + 迭代频率"，而非"哪个模型榜单更高"。</li>
+</ul>
+<hr>
+<h2>3. 证据与数据</h2>
+<h3>3.1 架构与模型演进（任务 1）</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>证据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>架构元框架</td>
+<td>late / mid / early fusion 三段式；M2T / M2G / M2M 任务形态（NMM Roadmap, arXiv:2605.25343）</td>
+</tr>
+<tr>
+<td>代际序列</td>
+<td>DreamLLM（2023-09）→ NExT-GPT（2023-09）→ GPT-4o（2024-05）→ VITA-1.5 / Qwen2.5-Omni（2025-01/03）→ Qwen3-Omni（2025-09）→ NExT-OMNI（2025-10）→ MiniCPM-o 4.5（2026-02）→ Qwen3.5-Omni（2026-03）→ Cosmos 3（2026-06）</td>
+</tr>
+<tr>
+<td>MoE 稀疏化</td>
+<td>Mamoda2.5（arXiv:2605.02641，DiT-MoE）、LLaDA2.0-Uni（MoE 掩码扩散）、ICML 2026 讨论 MoE 与"视觉-语言扩展不对称"</td>
+</tr>
+<tr>
+<td>视觉编码之争</td>
+<td>TUNA-2（arXiv:2604.24763）"Pixel Embeddings Beat Vision Encoders"；NEO-OV 原生像素到词；另一派用 holistic image-video ViT tokenizer、Janus 解耦编码、SigLIP-VQ</td>
+</tr>
+<tr>
+<td>生态信号</td>
+<td>UMM Zoo 与 NMM Zoo 两个 HuggingFace 集合于 2026-06-06 发布，模型库更新至 2026-10-19</td>
+</tr>
+<tr>
+<td>量化锚点</td>
+<td>MDPI 综述（2026-05-29，91 页）对 15 个模型在 VQAv2 / GQA / TextVQA / MMBench / MMMU 五基准并排比较</td>
+</tr>
+</tbody></table>
+<h3>3.2 训练与对齐（任务 2）</h3>
+<ul>
+<li>1T token 预训练：100+ 对照实验、约 50 万 GPU 小时；视觉编码器与视觉指令数据敏感度最高；文本描述收益快速饱和。</li>
+<li>数据受限设定：最优 weight decay 为常规实践的 <strong>30 倍</strong>，损失可单调下降。</li>
+<li>位置编码：MHRoPE、MRoPE-I 即插即用，无需改架构。</li>
+<li>DECS：7 个基准推理 token 减少 <strong>50%+</strong>，性能保持或提升。</li>
+<li>对齐平台化：Dataiku 工作流中 RLHF 以 DPO（<code>trl</code> 的 <code>DPOTrainer</code>）优于 PPO；RLAIF 用 GPT-5 / Claude 4 Sonnet 作裁判；RLVR 基于 <code>gsm8k_train</code>/<code>gsm8k_val</code> 三步走。</li>
+<li>隐私：相同 DP 保证下，适配数据越接近预训练分布实际风险越高；LoRA 等 PEFT 在 OOD 数据上经验隐私保护最好。</li>
+<li>生成式对齐：RLR 递归似然比优化器通过扩散链计算图重排实现低方差无偏梯度，图像/视频生成验证有效。</li>
+</ul>
+<h3>3.3 评测基准与能力（任务 3）</h3>
+<p><strong>头部模型加权多模态分数（BenchLM，2026-10-26）</strong></p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>加权分</th>
+<th>上下文</th>
+<th>定价（输入/输出）</th>
+<th>延迟</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Kimi K3.1 Pro</td>
+<td>98</td>
+<td>1.05M</td>
+<td>$2.00/$10.00</td>
+<td>37.83s</td>
+</tr>
+<tr>
+<td>Qwen3.8 Max</td>
+<td>92（开源/自托管）</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Claude Opus 5.5</td>
+<td>91.8</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>GPT-6.1 Terra</td>
+<td>91.6</td>
+<td>—</td>
+<td>$4/$20</td>
+<td>638.47s</td>
+</tr>
+</tbody></table>
+<p>前四分差仅 <strong>6.2 分</strong>，但价格差 <strong>4 倍</strong>、延迟差近 <strong>17 倍</strong>。子项交叉领先：Qwen3.8 Max 在 OCRBench V2 达 92.1%、MMMU-Pro 82.3%；GPT-6.1 Terra 在 MMMU-Pro 以 85.5% 反超；Gemini 3.6/3.8/3.5 Flash 在 MMMU-Pro 落在 83.6%~87%。</p>
+<p><strong>ZeroBench 硬边界</strong>：Kimi K3.1 Pro 39.0%、Gemini 3.5 Flash 33.6%、Muse Spark 33.0%、Qwen3.8 Max 24.0%——失败率仍达 61%~76%。</p>
+<p><strong>Video-MME 量化结论</strong>（6 领域/30 子域、900 视频/254 小时/2,700 QA、时长 11 秒–1 小时）：</p>
+<ul>
+<li>Gemini 1.5 Pro 无字幕：81.7%（短）→ 74.3%（中）→ 67.4%（长），降幅 <strong>14.3pp</strong>；</li>
+<li>GPT-4o：80.0% → 70.3% → 65.3%，降幅 <strong>14.7pp</strong>；</li>
+<li>字幕/音频增益：Gemini 1.5 Pro 整体 75.0% → <strong>81.3%</strong>（+6.3pp），长视频段 67.4% → <strong>77.4%</strong>（<strong>+10.0pp</strong>）；</li>
+<li>开源追赶：video-SALMONN 2+（72B，10 fps）整体 79.7%/81.6%、长视频 72.3%/76.4%；Keye-VL-1.5（8B）73.0%；ViLAMP（7B，1 fps）67.5%。</li>
+</ul>
+<p><strong>新基准三方向</strong>：长视频/时序（ELV-Halluc、OVO-Bench、TemporalBench、TVBench、Vinoground、MotionBench、TOMATO、VideoWebArena、IV-Bench、MMVU、Video-MMMU、4D-Bench）；Agent/GUI（MAS-Bench、LearnAct、EmbodiedBench、EmbodiedEval、DSBench）；幻觉与可靠性（ELV-Halluc、MMHAL-BENCH、The Curse of Multi-Modalities、MM-RLHF、OmniAlign-V、MME-CoT、VisualPRM/ViLBench/VLRewardBench、MMIR）。</p>
+<p><strong>样本量悬殊</strong>：MMHAL-BENCH 仅 96 条，PMC-VQA 2.0k，EgoSchema 5.0k，AttackVLM 高达 50.0k——小样本基准（&lt;100）的统计显著性存疑。</p>
+<h3>3.4 应用与落地（任务 4）</h3>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>代表实践</th>
+<th>关键指标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>边缘优先</td>
+<td>Jetson Orin NX 具身系统；EgoPrune</td>
+<td>本地处理快 <strong>7.3×</strong>；免训练 token 剪枝降低 FLOPs/内存/时延</td>
+</tr>
+<tr>
+<td>私有化离线</td>
+<td>科大讯飞 All-in-One（MWC26，2026-03）</td>
+<td>双大模型引擎、纯离线；转写准确率 +85%、效率 <strong>3×</strong>；生态 130 万+ 智能体、30+ Super Agents</td>
+</tr>
+<tr>
+<td>弹性 Serverless</td>
+<td>Vultr + NVIDIA Nemotron 3 Nano Omni（2026-04-28）</td>
+<td>开放多模态模型 + 专用 GPU 集群 + 无服务器推理</td>
+</tr>
+</tbody></table>
+<p><strong>交付经济学基准</strong>：单 Agent + 少量工具集成，原型 <strong>2–4 周</strong>、生产就绪 <strong>6–8 周</strong>；多 Agent 或需自训模型 <strong>2–4 个月</strong>；专业公司费率 <strong>£150–£350/小时</strong>，更广市场 <strong>£200–£400/小时</strong>；全球集成商（Deloitte UK G-Cloud 14）<strong>£1,650–£2,050/人天</strong>（公共部门折后价）。</p>
+<p><strong>隐藏成本</strong>：2026 年 Agent 综述指出"重试与上下文窗口增长"构成隐性开销，成本随交互轮次近似线性乃至超线性攀升。</p>
+<h3>3.5 挑战与前沿（任务 5）</h3>
+<p>任务 5 的笔记正文（任务总结）未回填，<strong>暂无该子任务的系统性证据</strong>。依据任务 3、任务 4 的间接证据，可确认的挑战包括：长视频时序衰减、抽象视觉推理失败率 61%~76%、多模态冲突推理与长时序语义聚合幻觉、非确定性输出与长程信用分配、安全攸关领域的部署证据缺口。任务 5 来源概览中列出的幻觉检测与对抗防御教程、Springer 幻觉综述等条目尚未被整合为结论，需下一轮补充。</p>
+<hr>
+<h2>4. 风险与挑战</h2>
+<h3>4.1 术语与对照组错配风险（任务 1）</h3>
+<p>"unified""native""omni"三者混用风险高。若不采用 late/mid/early fusion 三分法与 M2T/M2G/M2M 任务标注，实验对照组可能系统性错配，导致结论不可比。建议后续研究统一采用 NMM Roadmap 的标注体系。</p>
+<h3>4.2 三项未决技术之争（任务 1、任务 2）</h3>
+<ol>
+<li><strong>统一 token 是否保留模态特异性</strong>：完全离散统一简洁可扩展，但可能牺牲生成质量；Modality-Specificity Preserving 路线尚未在同等算力下被统一裁判。</li>
+<li><strong>视觉编码器是否必要</strong>：TUNA-2 主张像素嵌入已胜出，另一派仍以 holistic ViT tokenizer / SigLIP-VQ 强化编码，二者缺乏同等算力下的对照。</li>
+<li><strong>AR vs 扩散 vs 混合</strong>：扩散的"双向理解 + 迭代生成"论证在理论上优雅，但 KV cache、流式解码等工程生态成熟度落后。</li>
+</ol>
+<h3>4.3 序列爆炸：架构与部署被绑成同一问题（任务 1、任务 4）</h3>
+<p>长上下文多模态推理的<strong>序列爆炸</strong>被 NMM Roadmap 列为首要部署瓶颈，其直接来源是 tokenizer 的分辨率策略。视觉 token 数量是时延与成本的第一性变量，注意力计算呈二次方增长。这意味着"架构设计"与"部署成本"不是两个独立议题，tokenizer 设计同时决定序列长度、重建保真度与语义可分性，三者存在明确 trade-off。</p>
+<h3>4.4 评测可信度风险（任务 3）</h3>
+<ul>
+<li><strong>跨平台不可比</strong>：BenchLM 98 分 vs llm-stats MMBench-Video 0.020，归一化与评分脚本差异严重；</li>
+<li><strong>双口径漂移</strong>：provisional / verified 模式下排名移动；</li>
+<li><strong>评审模型印记</strong>：MMBench-Video 采用 GPT-4 自动评估，评审模型版本更迭会造成分数漂移；</li>
+<li><strong>样本量失真</strong>：96 条样本的基准常被用于宣称能力突破；</li>
+<li><strong>垂直领域空白</strong>：医疗、音乐、生物、物理等列在头部榜单中大量以"—"表示缺失，真实领域选型几乎无数据支持；</li>
+<li><strong>工具链双刃剑</strong>：VLMEvalKit 与 LMMs-Eval 提升可复现性，也可能把系统性偏差标准化。</li>
+</ul>
+<h3>4.5 隐私风险被系统性低估（任务 2）</h3>
+<p>ICLR 2026 隐私基准研究表明：在相同理论 DP 保证下，适配数据越接近预训练分布，实际隐私风险越高，即使无直接数据重叠。多模态视觉指令数据往往与网络预训练语料高度同分布，其泄漏风险可能被系统性低估。</p>
+<h3>4.6 产业侧三类工程与组织风险（任务 4）</h3>
+<ol>
+<li><strong>价值衰减</strong>：实验室高精度到现场低效用，主因是场景迁移与组织吸收能力，非模型问题；</li>
+<li><strong>分布漂移下的精度维持</strong>：剪枝/蒸馏后在光照变化、传感器漂移下维持精度仍是开放问题；</li>
+<li><strong>评估体系滞后</strong>：基准未必反映真实工作负载、非确定性输出使回归测试失效、安全攸关领域（如食品安全）缺乏长周期多站点部署记录与公共基准。</li>
+</ol>
+<h3>4.7 待验证的假设与信息缺口</h3>
+<ul>
+<li>任务 5（挑战与前沿）缺少系统性总结，幻觉与安全对齐的量化证据链不完整；</li>
+<li>GUI/计算机操作类 Agent 的生产环境成功率与回滚率缺少量化数据；</li>
+<li>视频<strong>生成</strong>在广告、影视、工业仿真中的单位成本与良率缺少直接产业证据；</li>
+<li>边缘多模态在长周期分布漂移下的精度衰减曲线尚未被测量（决定运维成本而非一次性部署成本）；</li>
+<li>"像素嵌入优于视觉编码器"与"扩散优于自回归"两项主张均缺乏同等算力下的统一裁判。</li>
+</ul>
+<hr>
+<h2>5. 参考来源</h2>
+<h3>任务 1：架构与模型演进</h3>
+<ul>
+<li>Toward Native Multimodal Modeling: A Roadmap — <a href="https://arxiv.org/pdf/2605.25343" target="_blank" rel="noopener noreferrer">https://arxiv.org/pdf/2605.25343</a></li>
+<li>A Comprehensive Survey and Guide to Multimodal Large Language Models in Vision–Language Tasks（MDPI <em>Computation</em> 14(6):125）— <a href="https://www.mdpi.com/2079-3197/14/6/125" target="_blank" rel="noopener noreferrer">https://www.mdpi.com/2079-3197/14/6/125</a></li>
+<li>Towards Unified Multimodal Large Language Models: A survey（ACL Findings 2026）— <a href="https://aclanthology.org/2026.findings-acl.1853" target="_blank" rel="noopener noreferrer">https://aclanthology.org/2026.findings-acl.1853</a></li>
+<li>Unified Understanding and Generation | BradyFU/Awesome-Multimodal-Large-Language-Models | Zread — <a href="https://zread.ai/BradyFU/Awesome-Multimodal-Large-Language-Models/19-unified-understanding-and-generation" target="_blank" rel="noopener noreferrer">https://zread.ai/BradyFU/Awesome-Multimodal-Large-Language-Models/19-unified-understanding-and-generation</a></li>
+<li>Awesome Multimodal Modeling（OpenEnvision）— <a href="https://cdn.jsdelivr.net/gh/OpenEnvision/Awesome-Multimodal-Modeling@main/README.md" target="_blank" rel="noopener noreferrer">https://cdn.jsdelivr.net/gh/OpenEnvision/Awesome-Multimodal-Modeling@main/README.md</a></li>
+</ul>
+<h3>任务 2：训练与对齐方法</h3>
+<ul>
+<li>ICLR 2026 Orals — <a href="https://iclr.cc/virtual/2026/events/oral" target="_blank" rel="noopener noreferrer">https://iclr.cc/virtual/2026/events/oral</a></li>
+<li>MM-RLHF: The Next Step Forward in Multimodal LLM Alignment — <a href="https://raw.githubusercontent.com/mlresearch/v267/main/assets/zhang25cs/zhang25cs.pdf" target="_blank" rel="noopener noreferrer">https://raw.githubusercontent.com/mlresearch/v267/main/assets/zhang25cs/zhang25cs.pdf</a></li>
+<li>A Survey on Post-Training of Multimodal Large Language Models — <a href="https://www.preprints.org/frontend/manuscript/ed7a20eb7a0ebbc2b648751981fa9240/download_pub" target="_blank" rel="noopener noreferrer">https://www.preprints.org/frontend/manuscript/ed7a20eb7a0ebbc2b648751981fa9240/download_pub</a></li>
+<li>Advanced model alignment: RLHF, RLAIF, and RLVR in Dataiku — <a href="https://developer.dataiku.com/latest/tutorials/genai/llm/alignment/index.html" target="_blank" rel="noopener noreferrer">https://developer.dataiku.com/latest/tutorials/genai/llm/alignment/index.html</a></li>
+<li>ICLR 2026 Papers with Code &amp; Data – Paper Digest — <a href="https://www.paperdigest.org/2026/04/iclr-2026-papers-with-code-data" target="_blank" rel="noopener noreferrer">https://www.paperdigest.org/2026/04/iclr-2026-papers-with-code-data</a></li>
+</ul>
+<h3>任务 3：评测基准与能力</h3>
+<ul>
+<li>Best LLMs for Multimodal &amp; Grounded — October 2026 Leaderboard | BenchLM.ai — <a href="https://benchlm.ai/multimodal-grounded" target="_blank" rel="noopener noreferrer">https://benchlm.ai/multimodal-grounded</a></li>
+<li>Multimodal Benchmarks（btjhjeon Collection）— <a href="https://huggingface.co/collections/btjhjeon/multimodal-benchmarks" target="_blank" rel="noopener noreferrer">https://huggingface.co/collections/btjhjeon/multimodal-benchmarks</a></li>
+<li>MME-Survey: A Comprehensive Survey on Evaluation of Multimodal LLMs — <a href="https://arxiv.org/html/2411.15296v1" target="_blank" rel="noopener noreferrer">https://arxiv.org/html/2411.15296v1</a></li>
+<li>MMBench-Video Leaderboard — <a href="https://llm-stats.com/benchmarks/mmbench-video" target="_blank" rel="noopener noreferrer">https://llm-stats.com/benchmarks/mmbench-video</a></li>
+<li>Video-MME — <a href="https://video-mme.github.io/home_page.html" target="_blank" rel="noopener noreferrer">https://video-mme.github.io/home_page.html</a></li>
+</ul>
+<h3>任务 4：应用与落地</h3>
+<ul>
+<li>Are multimodal AI agents ready for real-world deployment? — <a href="https://www.wispaper.ai/en/research/multimodal-ai-real-world" target="_blank" rel="noopener noreferrer">https://www.wispaper.ai/en/research/multimodal-ai-real-world</a></li>
+<li>Vultr Deploys NVIDIA Nemotron 3 Nano Omni to Streamline Multimodal Enterprise Agent Systems — <a href="https://finance.yahoo.com/sectors/technology/articles/vultr-deploys-nvidia-nemotron-3-160000410.html" target="_blank" rel="noopener noreferrer">https://finance.yahoo.com/sectors/technology/articles/vultr-deploys-nvidia-nemotron-3-160000410.html</a></li>
+<li>Embodied AI Agents: Modeling the World — <a href="https://arxiv.org/html/2506.22355v1" target="_blank" rel="noopener noreferrer">https://arxiv.org/html/2506.22355v1</a></li>
+<li>Top AI Agent Development Companies in 2026: Who Has Actually Shipped One — <a href="https://winder.ai/top-ai-agent-development-companies-2026" target="_blank" rel="noopener noreferrer">https://winder.ai/top-ai-agent-development-companies-2026</a></li>
+<li>iFLYTEK Showcases All-In-One AI Solutions at MWC26 — <a href="https://markets.businessinsider.com/news/stocks/iflytek-showcases-all-in-one-ai-solutions-at-mwc26-bringing-private-customizable-ai-to-industry-1035901167" target="_blank" rel="noopener noreferrer">https://markets.businessinsider.com/news/stocks/iflytek-showcases-all-in-one-ai-solutions-at-mwc26-bringing-private-customizable-ai-to-industry-1035901167</a></li>
+</ul>
+<h3>任务 5：挑战与前沿</h3>
+<blockquote>
+<p>该任务笔记正文未回填，以下仅为来源概览条目，尚未形成可引用的结论。</p>
+</blockquote>
+<ul>
+<li>The Hallucinatory Horizon: Navigating the Perils and Promises of Multimodal Large Language Models — <a href="https://dreamypujara.medium.com/the-hallucinatory-horizon-navigating-the-perils-and-promises-of-multimodal-large-language-models-c749ccc5b95c" target="_blank" rel="noopener noreferrer">https://dreamypujara.medium.com/the-hallucinatory-horizon-navigating-the-perils-and-promises-of-multimodal-large-language-models-c749ccc5b95c</a></li>
+<li>From Hallucination Detection to Adversarial Defense: A Unified Framework for LVLM and LLM Safety — <a href="https://amiad-research.github.io/trustworthy-mllm-tutorial" target="_blank" rel="noopener noreferrer">https://amiad-research.github.io/trustworthy-mllm-tutorial</a></li>
+<li>Daily Papers: multi-modal conflicting hallucination（Hugging Face）— <a href="https://huggingface.co/papers?q=multi-modal+conflicting+hallucination" target="_blank" rel="noopener noreferrer">https://huggingface.co/papers?q=multi-modal+conflicting+hallucination</a></li>
+<li>Daily Papers: multimodal hallucination（Hugging Face）— <a href="https://huggingface.co/papers?q=multimodal+hallucination" target="_blank" rel="noopener noreferrer">https://huggingface.co/papers?q=multimodal+hallucination</a></li>
+<li>The rise of hallucination in large language models: systematic reviews, performance analysis and challenges（Cluster Computing, Springer）— <a href="https://link.springer.com/article/10.1007/s10586-025-05891-z" target="_blank" rel="noopener noreferrer">https://link.springer.com/article/10.1007/s10586-025-05891-z</a></li>
+</ul>

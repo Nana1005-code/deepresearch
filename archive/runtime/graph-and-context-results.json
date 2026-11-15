@@ -1,0 +1,414 @@
+{
+  "pin": {
+    "public_id": "9a35018433d843499a2e4c058140da56",
+    "source_run_id": "dd27725b2d6f4902ac8b554d32f14996",
+    "title": "探究多模态大模型在2026年的研究现状",
+    "summary": "探究多模态大模型在2026年的研究现状",
+    "research_input": "探究多模态大模型在2026年的研究现状",
+    "data_origin": "user",
+    "is_pinned": 1,
+    "pinned_at": "2026-11-15T10:04:31.566601+00:00",
+    "extraction_status": "completed",
+    "extraction_error": null,
+    "report_content": null,
+    "report_visibility": "summary",
+    "is_anonymous": 1,
+    "published_at": "2026-11-15T09:56:29.669997+00:00",
+    "research_started_at": "2026-11-01T02:19:44.142788+00:00",
+    "updated_at": "2026-11-15T10:04:31.566601+00:00",
+    "view_count": 0,
+    "like_count": 0,
+    "favorite_count": 0,
+    "heat_score": 10.0,
+    "domain_slug": "general",
+    "domain_name": "综合",
+    "author": "匿名研究者",
+    "topics": [
+      "多模态大模型",
+      "多模态",
+      "2026年",
+      "研究现状"
+    ]
+  },
+  "pagination": {
+    "items": [
+      {
+        "public_id": "9a35018433d843499a2e4c058140da56",
+        "source_run_id": "dd27725b2d6f4902ac8b554d32f14996",
+        "title": "探究多模态大模型在2026年的研究现状",
+        "summary": "探究多模态大模型在2026年的研究现状",
+        "research_input": "探究多模态大模型在2026年的研究现状",
+        "data_origin": "user",
+        "is_pinned": 1,
+        "pinned_at": "2026-11-15T10:04:31.566601+00:00",
+        "extraction_status": "completed",
+        "extraction_error": null,
+        "report_visibility": "summary",
+        "is_anonymous": 1,
+        "published_at": "2026-11-15T09:56:29.669997+00:00",
+        "research_started_at": "2026-11-01T02:19:44.142788+00:00",
+        "updated_at": "2026-11-15T10:04:31.566601+00:00",
+        "view_count": 0,
+        "like_count": 0,
+        "favorite_count": 0,
+        "heat_score": 10.0,
+        "domain_slug": "general",
+        "domain_name": "综合",
+        "author": "匿名研究者",
+        "can_manage": true,
+        "topics": [
+          "多模态大模型",
+          "多模态",
+          "2026年",
+          "研究现状"
+        ]
+      }
+    ],
+    "total": 1,
+    "limit": 1,
+    "offset": 0
+  },
+  "remove": {
+    "ok": true
+  },
+  "reimport": {
+    "ok": true,
+    "restored": true,
+    "research": {
+      "public_id": "9a35018433d843499a2e4c058140da56",
+      "source_run_id": "dd27725b2d6f4902ac8b554d32f14996",
+      "title": "探究多模态大模型在2026年的研究现状",
+      "summary": "探究多模态大模型在2026年的研究现状",
+      "research_input": "探究多模态大模型在2026年的研究现状",
+      "data_origin": "user",
+      "is_pinned": 0,
+      "pinned_at": null,
+      "extraction_status": "completed",
+      "extraction_error": null,
+      "report_content": null,
+      "report_visibility": "summary",
+      "is_anonymous": 1,
+      "published_at": "2026-11-15T09:56:29.669997+00:00",
+      "research_started_at": "2026-11-01T02:19:44.142788+00:00",
+      "updated_at": "2026-11-15T10:04:31.643144+00:00",
+      "view_count": 0,
+      "like_count": 0,
+      "favorite_count": 0,
+      "heat_score": 10.0,
+      "domain_slug": "general",
+      "domain_name": "综合",
+      "author": "匿名研究者",
+      "topics": [
+        "多模态大模型",
+        "多模态",
+        "2026年",
+        "研究现状"
+      ]
+    },
+    "message": "已重新导入到我的研究图谱"
+  },
+  "personal_graph": {
+    "nodes": 4,
+    "edges": 6
+  },
+  "personal_node": {
+    "public_id": "6b556a72648a425a992f6e33ee951a7f",
+    "name": "多模态大模型",
+    "description": null,
+    "concept_type": "model",
+    "research_count": 1,
+    "heat_score": 10.0,
+    "aliases": [
+      "MLLM",
+      "Multimodal Large Model",
+      "多模态大型模型"
+    ],
+    "domains": [
+      {
+        "slug": "general",
+        "name": "综合",
+        "relevance": 1.0
+      }
+    ],
+    "researches": [
+      {
+        "public_id": "9a35018433d843499a2e4c058140da56",
+        "source_run_id": "dd27725b2d6f4902ac8b554d32f14996",
+        "title": "探究多模态大模型在2026年的研究现状",
+        "research_input": "探究多模态大模型在2026年的研究现状",
+        "published_at": "2026-11-15T09:56:29.669997+00:00",
+        "research_started_at": "2026-11-01T02:19:44.142788+00:00",
+        "updated_at": "2026-11-15T10:04:31.643144+00:00",
+        "data_origin": "user",
+        "extraction_status": "completed",
+        "heat_score": 10.0,
+        "author": "匿名研究者"
+      }
+    ],
+    "stats": {
+      "researches": 1,
+      "user_researches": 1,
+      "sample_researches": 0,
+      "heat": 10.0
+    },
+    "limit": 100
+  },
+  "academic_graph": {
+    "nodes": 27,
+    "edges": 28
+  },
+  "academic_node": {
+    "public_id": "3807a510bd804f1c811b58a5937ba86c",
+    "name": "数学教育与教学法",
+    "original_name": "Mathematics Education and Pedagogy",
+    "summary_zh": "研究数学教学的理论、方法与实践，包括课程设计、教学策略及学习效果评估。",
+    "confidence": 0.95,
+    "resolution_status": "pending",
+    "aliases": [
+      "数学教学",
+      "数学教育与教学法",
+      "数学教育研究",
+      "Mathematics Education and Pedagogy"
+    ],
+    "domains": [
+      {
+        "slug": "education",
+        "name": "教育",
+        "relevance": 0.95
+      }
+    ],
+    "source_topics": [
+      {
+        "openalex_id": "T12522",
+        "display_name": "Mathematics Education and Pedagogy",
+        "subfield_name": "Education",
+        "field_name": "Social Sciences",
+        "domain_name": "Social Sciences",
+        "confidence": 0.95,
+        "source": "bootstrap"
+      }
+    ],
+    "stats": {
+      "works": 2,
+      "citations": 0,
+      "source_topics": 1
+    },
+    "works": [
+      {
+        "openalex_id": "W7220164756",
+        "doi": null,
+        "title": "EXPLORING LEARNING GAPS AND SUPPORT NEEDS IN DIFFERENTIATION AND INTEGRATION TOPIC",
+        "abstract": "The purpose of this research was to explore any learning difficulties faced by students enrolled in Differentiation and Integration under the course DBM20173 of Engineering Mathematics 2. The aim was to pinpoint possible reasons that affected students’ comprehension and utilization of concepts of calculus, especially for questions related to interpretation, selection of methods, visualization, and problem-solving. This was accomplished using a combination of methods, namely, pre-test results, error identification, survey from students, interview or focus group discussion and observation by lecturer. The results revealed that students experienced difficulty only with the unfamiliar and application-based questions rather than direct procedural ones. According to the pre-test results, volume of bounded regions represented the highest number of difficulties among the participants with 25 out of 30 participants (83.3%), while trigonometric, exponential and reciprocal integration involved 24 students (80.0%) and area under a curve involved 23 students (76.7%). As many as 248 errors occurred during the process; formula error was found to be the most common type of errors occurring in 58 cases (23.4%), while visualisation error occurred in 43 cases (17.3%), followed by method-selection error with 42 occurrences (16.9%). The questionnaire results revealed that the level of readiness to engage in digital and immersive learning assistance was very high, as the mean score equaled 4.39, while need for visualisation and application-based assistance was also very high (mean score 4.34).",
+        "publication_date": "2026-11-15",
+        "publication_year": 2026,
+        "work_type": "article",
+        "language": "en",
+        "source_name": "MALAYSIAN JOURNAL OF INNOVATION IN ENGINEERING AND APPLIED SOCIAL SCIENCES (MYJIEAS)",
+        "landing_page_url": "https://myjieas.psa.edu.my/myjieas/article/view/125",
+        "cited_by_count": 0,
+        "is_oa": 1,
+        "oa_url": "https://myjieas.psa.edu.my/myjieas/article/download/125/90",
+        "topic_score": 0.04340000078082085,
+        "authors": [
+          {
+            "id": "A5082519985",
+            "name": "Maziharita Mohamood"
+          }
+        ]
+      },
+      {
+        "openalex_id": "W7122349269",
+        "doi": null,
+        "title": "Diagnostik im Kompetenzbereich \"Daten und Zufall\":Didaktisches Material diagnostisch nutzen",
+        "abstract": "Der Beitrag beschreibt, wie die Wahrscheinlichkeits-Box von Gudrun Häring und Silke Ruwisch (2024) auch für Lernende mit intellektueller Beeinträchtigung diagnostisch genutzt werden kann. Vorgestellt wird eine Beobachtungsmatrix zu ausgewählten Aufgaben, um die Kompetenzen der Lernenden sichtbar zu machen.",
+        "publication_date": "2026-11-15",
+        "publication_year": 2026,
+        "work_type": "article",
+        "language": "de",
+        "source_name": "Multilingual Matters (Channel View Publications)",
+        "landing_page_url": "http://fox.leuphana.de/portal/de/publications/diagnostik-im-kompetenzbereich-daten-und-zufall(ad136c62-bf16-4136-8836-472add14f6b4).html",
+        "cited_by_count": 0,
+        "is_oa": 0,
+        "oa_url": null,
+        "topic_score": 0.014100000262260437,
+        "authors": [
+          {
+            "id": "A5159604123",
+            "name": "Holger Schäfer"
+          },
+          {
+            "id": "A5122739618",
+            "name": "Mareike Theobald"
+          },
+          {
+            "id": "A5026033947",
+            "name": "Silke Ruwisch"
+          },
+          {
+            "id": "A5045939578",
+            "name": "Kirsten Winkel"
+          }
+        ]
+      }
+    ],
+    "limit": 100
+  },
+  "openalex_chat": {
+    "plan": {
+      "intent": "related_topics",
+      "metric": "heat",
+      "days": 365,
+      "limit": 10,
+      "domain_slug": "education",
+      "topics": [
+        "数学教育与教学法"
+      ]
+    },
+    "matched_topics": [
+      "数学教育与教学法"
+    ],
+    "data": {
+      "related": [
+        {
+          "name": "数学与计算方法",
+          "original_name": "Mathematical and Computational Methods",
+          "cooccurrence_count": 1,
+          "relation_score": 0.5
+        },
+        {
+          "name": "数学教育与课程项目",
+          "original_name": "Mathematics Education and Programs",
+          "cooccurrence_count": 1,
+          "relation_score": 0.5
+        },
+        {
+          "name": "教育评估与教学法",
+          "original_name": "Educational Assessment and Pedagogy",
+          "cooccurrence_count": 1,
+          "relation_score": 0.5
+        },
+        {
+          "name": "统计教育与方法论",
+          "original_name": "Statistics Education and Methodologies",
+          "cooccurrence_count": 1,
+          "relation_score": 0.5
+        }
+      ],
+      "matched_topics": [
+        "数学教育与教学法"
+      ],
+      "source": "openalex"
+    },
+    "answer": "## 统计口径与筛选条件\n\n- 数据源：OpenAlex 真实论文元数据。\n- 指标说明：OpenAlex 模式下 `heat` 表示论文数量，不是浏览、点赞或用户热度。\n- 统计周期：最近 365 天。\n- 筛选领域：`education`。\n- 匹配主题：**数学教育与教学法**。\n- 返回类型：关联主题，`limit=10`，实际返回 4 个关联主题。\n- 需要说明：本次统计结果**没有给出**分时间段热度、新增研究数、环比百分比，也没有给出具体论文标题、作者、DOI、发表时间等元数据。\n\n## 可验证的关联主题结果\n\n在最近 365 天、`education` 领域内，与“数学教育与教学法”匹配到的关联主题如下：\n\n| 关联主题 | 英文名 | 共现次数 | 关系得分 |\n|---|---|---:|---:|\n| 数学与计算方法 | Mathematical and Computational Methods | 1 | 0.5 |\n| 数学教育与课程项目 | Mathematics Education and Programs | 1 | 0.5 |\n| 教育评估与教学法 | Educational Assessment and Pedagogy | 1 | 0.5 |\n| 统计教育与方法论 | Statistics Education and Methodologies | 1 | 0.5 |\n\n这些关联主题的共现次数均为 1，关系得分均为 0.5。也就是说，在当前返回结果中，它们与“数学教育与教学法”的关联强度表现相同，无法据此判断哪个方向更强或更热。\n\n## 趋势判断\n\n用户询问的是“研究趋势”，但当前统计结果只包含关联主题列表，不包含按月份、季度或年度分段的数据。因此无法逐段列出：\n\n- 热度：未提供分时间段论文数量；\n- 新增研究数：未提供；\n- 环比百分比：未提供。\n\n所以，**无法判断“数学教育与教学法”相关研究是上升、下降还是稳定**。当前只能确认：在最近 365 天、`education` 领域内，该主题与上述 4 个主题存在共现记录，且共现次数很低，均为 1 次。\n\n## 结论\n\n当前数据不足以介绍具体论文，也不足以分析研究趋势。可验证的结论仅限于：  \n“数学教育与教学法”在 OpenAlex 最近 365 天、`education` 领域下，匹配到的关联主题包括数学与计算方法、数学教育与课程项目、教育评估与教学法、统计教育与方法论；但这些关联的共现次数均为 1，关系得分均为 0.5，样本量很小，不能据此推断研究热点强弱或趋势方向。趋势结论应标记为：**数据不足，无法判断上升、下降或稳定**。"
+  },
+  "local_chat": {
+    "plan": {
+      "intent": "find_research_gaps",
+      "source": "openalex_and_my_history"
+    },
+    "matched_topics": [
+      "数学教育与教学法"
+    ],
+    "data": {
+      "matched_topics": [
+        "数学教育与教学法"
+      ],
+      "my_total_imports": 4,
+      "suggestions": [
+        {
+          "public_id": "3687ba2b309b462db54c1a70e1e608fd",
+          "name": "统计教育与方法论",
+          "original_name": "Statistics Education and Methodologies",
+          "cooccurrence_count": 1,
+          "academic_work_count": 1,
+          "relation_score": 0.5,
+          "my_research_count": 0,
+          "discovery_score": 0.346574
+        },
+        {
+          "public_id": "a1f8a9fe8b1640b2b86791da347a15a2",
+          "name": "教育评估与教学法",
+          "original_name": "Educational Assessment and Pedagogy",
+          "cooccurrence_count": 1,
+          "academic_work_count": 1,
+          "relation_score": 0.5,
+          "my_research_count": 0,
+          "discovery_score": 0.346574
+        },
+        {
+          "public_id": "0265451d7ad54fc78f356553d29384b4",
+          "name": "数学教育与课程项目",
+          "original_name": "Mathematics Education and Programs",
+          "cooccurrence_count": 1,
+          "academic_work_count": 1,
+          "relation_score": 0.5,
+          "my_research_count": 0,
+          "discovery_score": 0.346574
+        },
+        {
+          "public_id": "efabeedeec154035ac112446204018f4",
+          "name": "数学与计算方法",
+          "original_name": "Mathematical and Computational Methods",
+          "cooccurrence_count": 1,
+          "academic_work_count": 1,
+          "relation_score": 0.5,
+          "my_research_count": 0,
+          "discovery_score": 0.346574
+        }
+      ],
+      "source": "openalex_and_local_history"
+    },
+    "answer": "依据后端返回的 `openalex_and_local_history` 统计：你的目标匹配主题是 **“数学教育与教学法”**，本机研究历史总导入数为 **4**。以下推荐均来自该次后端建议列表；这些主题在你的研究记录中均为 **0 次**，且没有访问互联网或额外编造数据。\n\n| 推荐主题 | 为什么与“数学教育与教学法”相关 | 我的研究记录数 | 后端关联指标 |\n|---|---|---:|---|\n| **数学教育与课程项目** / Mathematics Education and Programs | 与目标主题共现 1 次，关联分数 0.5。它直接涉及数学课程设计、课程标准、教学项目与实施，是数学教育研究的核心邻近方向。 | **0** | cooccurrence_count=1；academic_work_count=1；discovery_score=0.346574 |\n| **教育评估与教学法** / Educational Assessment and Pedagogy | 与目标主题共现 1 次，关联分数 0.5。它连接评估设计、反馈、课堂评价与教学法，是数学教育中理解学习效果和教学改进的重要方向。 | **0** | cooccurrence_count=1；academic_work_count=1；discovery_score=0.346574 |\n| **统计教育与方法论** / Statistics Education and Methodologies | 与目标主题共现 1 次，关联分数"
+  },
+  "quote_chat": {
+    "marks": [],
+    "messages": [
+      {
+        "role": "user",
+        "content": "根据研究上下文，项目编号是什么？",
+        "quote": "资料采集 → 交叉核验 → 生成报告"
+      },
+      {
+        "role": "assistant",
+        "content": "根据提供的资料，项目编号是 **XQ-8472**。\n\n补充一点说明：该编号在资料 `acceptance-evidence.txt` 中出现，为唯一编号、没有别名；同一份资料还给出了三阶段流程（资料采集 → 交叉核验 → 生成报告）。不过资料中也提到，该内容属于功能测试构造、验收负责人为“测试角色”，因此编号与阶段划分仅具功能验证意义，如需对外使用，建议以立项或验收原始文件复核。",
+        "model_profile_id": "5357b6b870cc460fb4593a7be68d98d9",
+        "model_name": "DeepSeek Flash",
+        "model_id": "deepseek/deepseek-v4.1-flash",
+        "api_base_url": "https://api.tokenplus.cn/v1"
+      }
+    ]
+  },
+  "task_edit": {
+    "id": "4f4014275a274780a39d8e3290256951",
+    "title": "请基于上传的验收项目星桥资料，说明项目编号与三个阶段。只创建1个研究任务，报告控制在200字。",
+    "topic": "请基于上传的验收项目星桥资料，说明项目编号与三个阶段。只创建1个研究任务，报告控制在200字。",
+    "profile": {
+      "id": "5357b6b870cc460fb4593a7be68d98d9",
+      "name": "DeepSeek Flash",
+      "base_url": "https://api.tokenplus.cn/v1",
+      "model_id": "deepseek/deepseek-v4.1-flash",
+      "max_tokens": 8192,
+      "timeout": 120.0,
+      "created_at": "2026-11-15T09:53:29.459585+00:00"
+    },
+    "search_api": "duckduckgo",
+    "document_ids": [
+      "518a4a357c254d98b85411aafd4ad3b4"
+    ],
+    "status": "running",
+    "created_at": "2026-11-15T10:02:28.846815+00:00",
+    "updated_at": "2026-11-15T10:05:22.342040+00:00",
+    "error": null,
+    "timings": {
+      "planning": 8.397463899920695,
+      "task:1:search": 1.3743306000251323,
+      "task:1:summary": 17.092893599998206,
+      "execution": 18.627411099965684,
+      "report": 3.703663000022061,
+      "total": 31.183524499996565
+    },
+    "timing_active": {},
+    "ended_at": null,
+    "revision": 1
+  }
+}

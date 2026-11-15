@@ -1,0 +1,206 @@
+[
+  {
+    "title": "A Survey of Multimodal Hallucination Evaluation and Detection | alphaXiv",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:22:06.039867+00:00",
+    "url": "https://www.alphaxiv.org/abs/2507.19024",
+    "resolved_url": "https://www.alphaxiv.org/abs/2507.19024",
+    "page_title": "A Survey of Multimodal Hallucination Evaluation and Detection | alphaXiv"
+  },
+  {
+    "title": "POPE | EvalScope 文档",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:22:06.043872+00:00",
+    "url": "https://evalscope.readthedocs.io/en/v1.13.0/benchmarks/pope.html",
+    "resolved_url": "https://evalscope.readthedocs.io/en/v1.13.0/benchmarks/pope.html",
+    "page_title": "POPE | EvalScope"
+  },
+  {
+    "title": "GitHub - showlab/Awesome-MLLM-Hallucination",
+    "status": "unconfirmed",
+    "reason": "链接访问超时，请稍后重新核验",
+    "checked_at": "2026-11-15T16:22:07.123292+00:00",
+    "url": "https://github.com/showlab/awesome-mllm-hallucination"
+  },
+  {
+    "title": "Hallucination in Multimodal Foundation Models: A Survey on Causes, Corrections, and Evaluations",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:22:06.038866+00:00",
+    "url": "https://arxiv.org/html/2410.15359v2",
+    "resolved_url": "https://arxiv.org/html/2410.15359v2",
+    "page_title": "Hallucination in Multimodal Foundation Models: A Survey on Causes, Corrections, and Evaluations"
+  },
+  {
+    "title": "Critique Before Thinking: Mitigating Hallucination through Rationale-Augmented Instruction Tuning（Re-Critic）",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:22:41.238517+00:00",
+    "url": "https://arxiv.org/html/2505.07172v1",
+    "resolved_url": "https://arxiv.org/html/2505.07172v1",
+    "page_title": "Critique Before Thinking:Mitigating Hallucination through Rationale-Augmented Instruction Tuning"
+  },
+  {
+    "title": "Learning from Fine-Grained Visual Discrepancies: Mitigating Multimodal Hallucinations via In-Context Visual Contrastive Optimization（IC-VCO, ICML 2026）",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:22:44.461624+00:00",
+    "url": "https://icml.cc/virtual/2026/poster/62729",
+    "resolved_url": "https://icml.cc/virtual/2026/poster/62729",
+    "page_title": "Learning from Fine-Grained Visual Discrepancies: Mitigating Multimodal Hallucinations via In-Context Visual Contrastive Optimization"
+  },
+  {
+    "title": "Decoupling Contrastive Decoding: Robust Hallucination Mitigation in MLLMs（DCD, NeurIPS 2025）",
+    "status": "unconfirmed",
+    "reason": "页面标题与参考文献标题不一致",
+    "checked_at": "2026-11-15T16:22:47.232759+00:00",
+    "url": "http://papers.nips.cc/paper_files/paper/2025/hash/f39cc9110544a067f024c1fb8b396128-Abstract-Conference.html",
+    "resolved_url": "https://proceedings.neurips.cc//paper_files/paper/2025/hash/f39cc9110544a067f024c1fb8b396128-Abstract-Conference.html",
+    "page_title": "Decoupling Contrastive Decoding: Robust Hallucination Mitigation in Multimodal Large Language Models"
+  },
+  {
+    "title": "NeurIPS Poster: Decoupling Contrastive Decoding",
+    "status": "unconfirmed",
+    "reason": "页面标题与参考文献标题不一致",
+    "checked_at": "2026-11-15T16:22:51.346806+00:00",
+    "url": "https://neurips.cc/virtual/2025/poster/118235",
+    "resolved_url": "https://neurips.cc/virtual/2025/loc/san-diego/poster/118235",
+    "page_title": "NeurIPS Poster Decoupling Contrastive Decoding: Robust Hallucination Mitigation in Multimodal Large Language Models"
+  },
+  {
+    "title": "The Mirage of Performance Gains: Why Contrastive Decoding Fails to Address Multimodal Hallucination",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:22:57.247217+00:00",
+    "url": "https://www.alphaxiv.org/abs/2504.10020v1",
+    "resolved_url": "https://www.alphaxiv.org/abs/2504.10020v1",
+    "page_title": "The Mirage of Performance Gains: Why Contrastive Decoding Fails to  Address Multimodal Hallucination | alphaXiv"
+  },
+  {
+    "title": "Contrastive Decoding Strategies",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:22:58.635939+00:00",
+    "url": "https://www.emergentmind.com/topics/contrastive-decoding-strategies",
+    "resolved_url": "https://www.emergentmind.com/topics/contrastive-decoding-strategies",
+    "page_title": "Contrastive Decoding Strategies"
+  },
+  {
+    "title": "A multimodal cross-modal explainable retrieval-augmented generation framework for hallucination-grounded visual question answering（MXRAG, Scientific Reports）",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:23:01.546237+00:00",
+    "url": "https://www.nature.com/articles/s41598-026-69199-7",
+    "resolved_url": "https://www.nature.com/articles/s41598-026-69199-7",
+    "page_title": "A multimodal cross-modal explainable retrieval-augmented generation framework for hallucination-grounded visual question answering | Scientific Reports"
+  },
+  {
+    "title": "How Multimodal LLMs Work in 2026: A Visual Guide",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:23:06.761875+00:00",
+    "url": "https://futureagi.com/blog/exploring-how-multimodal-large-language-models-work",
+    "resolved_url": "https://futureagi.com/blog/exploring-how-multimodal-large-language-models-work/",
+    "page_title": "How Multimodal LLMs Work in 2026: A Visual Guide"
+  },
+  {
+    "title": "Mitigating multimodal hallucinations through visual attention tracing and origin-point regeneration（HB, Scientific Reports）",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:23:14.230387+00:00",
+    "url": "https://www.nature.com/articles/s41598-026-52390-1",
+    "resolved_url": "https://www.nature.com/articles/s41598-026-52390-1",
+    "page_title": "Mitigating multimodal hallucinations through visual attention tracing and origin-point regeneration | Scientific Reports"
+  },
+  {
+    "title": "Attention re-alignment in multimodal large language models via intermediate-layer guidance（ARA）",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:23:18.485491+00:00",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13153193",
+    "resolved_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13153193/",
+    "page_title": "Attention re-alignment in multimodal large language models via intermediate-layer guidance - PMC"
+  },
+  {
+    "title": "Mitigating Hallucinations in Multimodal LLMs via Object-aware Preference Optimization（CHAIR-DPO, BMVC 2025）",
+    "status": "unconfirmed",
+    "reason": "链接暂时无法访问或标题无法读取，请稍后重新核验",
+    "checked_at": "2026-11-15T16:22:37.362596+00:00",
+    "url": "https://bmva-archive.org.uk/bmvc/2025/assets/papers/Paper_666/paper.pdf"
+  },
+  {
+    "title": "MoDA: Modulation Adapter for Fine-Grained Visual Understanding in Instructional MLLMs",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:23:23.341958+00:00",
+    "url": "https://arxiv.org/html/2506.01850v2",
+    "resolved_url": "https://arxiv.org/html/2506.01850v2",
+    "page_title": "MoDA: Modulation Adapter for Fine-Grained Visual Understanding in Instructional MLLMs"
+  },
+  {
+    "title": "Cross-Modal Fusion Enhancement for VLM Hallucination Mitigation（GIFT, ICML 2026）",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:23:22.236351+00:00",
+    "url": "https://cdn.amazon.science/bd/e4/c9c324de4417ae9e10e77d8f4d44/icml2026-gift-3.pdf",
+    "resolved_url": "https://cdn.amazon.science/bd/e4/c9c324de4417ae9e10e77d8f4d44/icml2026-gift-3.pdf",
+    "page_title": "Cross-Modal Fusion Enhancement for VLM Hallucination Mitigation"
+  },
+  {
+    "title": "From Illusion to Insight: A Taxonomic Survey of Hallucination Mitigation Techniques in LLMs（MDPI AI 2025）",
+    "status": "unconfirmed",
+    "reason": "链接访问返回 HTTP 403",
+    "checked_at": "2026-11-15T16:24:05.287980+00:00",
+    "url": "https://www.mdpi.com/2673-2688/6/10/260"
+  },
+  {
+    "title": "Evaluating Object Hallucination in Large Vision-Language Models（POPE, EMNLP 2023）",
+    "status": "unconfirmed",
+    "reason": "链接访问超时，请稍后重新核验",
+    "checked_at": "2026-11-15T16:22:06.041874+00:00",
+    "url": "https://aclanthology.org/2023.emnlp-main.20.pdf"
+  },
+  {
+    "title": "Mitigating Hallucinations in Large Vision-Language Models via DPO: On-Policy Data（OPA-DPO, CVPR 2025）",
+    "status": "unconfirmed",
+    "reason": "链接访问超时，请稍后重新核验",
+    "checked_at": "2026-11-15T16:22:07.708081+00:00",
+    "url": "https://openaccess.thecvf.com/content/CVPR2025/papers/Yang_Mitigating_Hallucinations_in_Large_Vision-Language_Models_via_DPO_On-Policy_Data_CVPR_2025_paper.pdf"
+  },
+  {
+    "title": "A Comprehensive Survey of Hallucination Mitigation Techniques in Large Language Models | alphaXiv",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:24:08.551101+00:00",
+    "url": "https://www.alphaxiv.org/abs/2401.01313",
+    "resolved_url": "https://www.alphaxiv.org/abs/2401.01313",
+    "page_title": "A Comprehensive Survey of Hallucination Mitigation Techniques in Large\n  Language Models | alphaXiv"
+  },
+  {
+    "title": "LLM Hallucination Detection and Mitigation: State of the Art in 2026 | Zylos Research",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:24:07.589639+00:00",
+    "url": "https://zylos.ai/research/2026-01-27-llm-hallucination-detection-mitigation",
+    "resolved_url": "https://zylos.ai/research/2026-01-27-llm-hallucination-detection-mitigation/",
+    "page_title": "LLM Hallucination Detection and Mitigation: State of the Art in 2026 | Zylos Research"
+  },
+  {
+    "title": "The Battle Against AI Hallucinations: A Deep Dive into Mitigation Strategies for Large Language Models",
+    "status": "unconfirmed",
+    "reason": "链接访问超时，请稍后重新核验",
+    "checked_at": "2026-11-15T16:24:07.608654+00:00",
+    "url": "https://medium.com/@arghya05/the-battle-against-ai-hallucinations-a-deep-dive-into-mitigation-strategies-for-large-language-7fe8561db5b6"
+  },
+  {
+    "title": "A Comprehensive Survey of Hallucination in Large Language Models: Causes, Detection, and Mitigation",
+    "status": "real",
+    "reason": "链接可访问，且页面标题与参考文献标题一致",
+    "checked_at": "2026-11-15T16:23:34.935154+00:00",
+    "url": "https://arxiv.org/html/2510.06265v1",
+    "resolved_url": "https://arxiv.org/html/2510.06265v1",
+    "page_title": "A Comprehensive Survey of Hallucination in Large Language Models: Causes, Detection, and Mitigation"
+  }
+]

@@ -1,0 +1,22 @@
+const {chromium}=require('C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+(async()=>{const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});const context=await browser.newContext({viewport:{width:1800,height:1000}});const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+try{
+ const run='9dd4202ad348420a94375af66c23f153';await page.goto('http://127.0.0.1:5174/#research/'+run);
+ await page.locator('.quality-entry:visible').first().click();await page.getByRole('tab',{name:/^参考文献 /}).click();
+ await page.getByRole('button',{name:'重新核验',exact:true}).waitFor({timeout:180000});
+ const rows=await page.locator('.rqg-ref').evaluateAll(es=>es.map(e=>({title:e.querySelector('strong')?.textContent,labels:[...e.querySelectorAll('.rqg-chip')].map(x=>x.textContent),reasons:[...e.querySelectorAll('.rqg-chip[title]')].map(x=>x.title)})));
+ const real=rows.filter(r=>r.labels.includes('真实'));
+ assert.ok(real.length>0,'At least one real URL/title must pass live check');
+ assert.ok(real.every(r=>r.labels.includes('正文未引用')),'Independent uncited flag');
+ assert.ok(real.every(r=>!r.labels.includes('未核验')),'Real and unconfirmed are mutually exclusive');
+ assert.ok(rows.every(r=>!r.labels.includes('核验中')));
+ await page.locator('.rqg-ref').filter({has:page.getByText('真实',{exact:true})}).first().scrollIntoViewIfNeeded();
+ await page.screenshot({path:path.join(__dirname,'quality-real-label.png')});
+ const audit=await(await context.request.get('http://127.0.0.1:8000/quality/audit/'+run)).json();
+ assert.equal(audit.references.filter(r=>r.authenticity?.status==='real').length,real.length);
+ assert.equal(audit.score,82);
+ const report=await(await context.request.post('http://127.0.0.1:8000/quality/report',{data:{run_id:run}})).json();assert.ok(report.markdown.includes('真实；正文未引用'));
+ assert.deepEqual(errors,[]);
+ console.log(JSON.stringify({real:real.length,total:rows.length,rows,noBrowserErrors:true,scoreUnchanged:true},null,2));fs.writeFileSync(path.join(__dirname,'quality-real-label-results.json'),JSON.stringify(rows,null,2));
+}catch(e){console.error(e);await page.screenshot({path:path.join(__dirname,'quality-real-label-failure.png')});process.exitCode=1;}finally{await browser.close();}})();

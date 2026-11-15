@@ -1,0 +1,56 @@
+[
+  {
+    "name": "MD download",
+    "filename": "研究报告.md",
+    "failure": null
+  },
+  {
+    "name": "Word download",
+    "filename": "研究报告.docx",
+    "failure": null
+  },
+  {
+    "name": "PDF print preview",
+    "textLength": 11259
+  },
+  {
+    "name": "quality panel",
+    "score": "85"
+  },
+  {
+    "name": "quality tab 参考文献",
+    "length": 205
+  },
+  {
+    "name": "quality tab 来源",
+    "length": 3128
+  },
+  {
+    "name": "quality tab 引用位置",
+    "length": 4214
+  },
+  {
+    "name": "quality tab 质检单",
+    "length": 230
+  },
+  {
+    "name": "quality tab 问题",
+    "length": 551
+  },
+  {
+    "name": "quality marks on",
+    "changed": true
+  },
+  {
+    "name": "quality marks off",
+    "restored": false
+  },
+  {
+    "name": "workflow expand",
+    "visible": true
+  },
+  {
+    "name": "graph-page",
+    "loaded": true
+  }
+]

@@ -15,6 +15,19 @@ from pydantic import BaseModel, Field
 from services.llm import ModelOutputError
 from config import Configuration, SearchAPI
 from agent import DeepResearchAgent
+from storage import Store
+
+from services.document_library import DocumentLibrary
+from document_api import router as document_router
+
+from research_jobs import ResearchJobs, router as research_router
+from profile_api import router as profile_router, resolve_config
+from export_api import router as export_router
+# 报告质检（独立模块：只读 run 数据，不参与研究流程）
+from quality_api import router as quality_router
+from research_square import ResearchSquareStore
+from research_square.import_queue import ResearchImportQueue
+from research_square.router import router as research_square_router
 
 # 添加控制台日志处理程序
 logger.add(
@@ -36,8 +49,12 @@ logger.add(
 
 class ResearchRequest(BaseModel):
     """Payload for triggering a research run."""
-
-    topic: str = Field(..., description="Research topic supplied by the user")
+    document_ids: list[str] = Field(
+        default_factory=list,
+        max_length=20
+    )
+    model_profile_id: str | None = None
+    topic: str = Field(..., min_length=1, max_length=2000, description="Research topic supplied by the user")
     search_api: SearchAPI | None = Field(
         default=None,
         description="Override the default search backend configured via env",
@@ -78,10 +95,67 @@ def _build_config(payload: ResearchRequest) -> Configuration:
 
 def create_app() -> FastAPI:
     app = FastAPI(title="HelloAgents Deep Researcher")
+    # store = Store()
+    # store.bootstrap(Configuration.from_env())
+    # app.state.store = store
+    store = Store()
+
+    store.bootstrap(
+        Configuration.from_env()
+    )
+
+    # 初始化本地文献资料库
+    document_library = DocumentLibrary(store)
+
+    app.state.store = store
+
+    app.state.document_library = document_library
+
+    # 注册文献管理 API
+    app.include_router(
+        document_router(document_library)
+    )
+    app.include_router(profile_router(store))
+    # app.state.jobs = ResearchJobs(store, DeepResearchAgent)
+    app.state.jobs = ResearchJobs(
+        store,
+        DeepResearchAgent,
+        document_library=document_library
+    )
+    app.include_router(research_router(store, app.state.jobs)
+                       )
+
+    app.include_router(export_router)
+    app.include_router(quality_router(store, app.state.jobs))
+
+    # “我的研究图谱”使用独立 SQLite 数据库，不改写原研究历史库。
+    app.state.research_square = ResearchSquareStore()
+    app.state.research_import_queue = ResearchImportQueue(
+        store,
+        app.state.research_square,
+    )
+    app.include_router(
+        research_square_router(
+            store,
+            app.state.research_square,
+            app.state.research_import_queue,
+        )
+    )
+
+    from reading_api import router as reading_router
+    app.include_router(reading_router(store, app.state.jobs))
+    from conversation_api import router as conversation_router
+    app.include_router(conversation_router(store, app.state.jobs))
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=[
+            "http://127.0.0.1:5174",
+            "http://localhost:5174",
+            # Secondary local port is useful when another checkout already owns 5174.
+            "http://127.0.0.1:5175",
+            "http://localhost:5175",
+        ],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -89,6 +163,8 @@ def create_app() -> FastAPI:
 
     @app.on_event("startup")
     def log_startup_configuration() -> None:
+        store.recover_runs()
+        app.state.research_import_queue.start()
         config = Configuration.from_env()
 
         if config.llm_provider == "ollama":
@@ -113,6 +189,10 @@ def create_app() -> FastAPI:
             config.llm_max_tokens,
         )
 
+    @app.on_event("shutdown")
+    def stop_research_import_queue() -> None:
+        app.state.research_import_queue.stop()
+
     @app.get("/healthz")
     def health_check() -> Dict[str, str]:
         return {"status": "ok"}
@@ -120,7 +200,7 @@ def create_app() -> FastAPI:
     @app.post("/research", response_model=ResearchResponse)
     def run_research(payload: ResearchRequest) -> ResearchResponse:
         try:
-            config = _build_config(payload)
+            config = resolve_config(store, payload.model_profile_id, payload.search_api)
             agent = DeepResearchAgent(config=config)
             result = agent.run(payload.topic)
         except ModelOutputError as exc:
@@ -155,7 +235,7 @@ def create_app() -> FastAPI:
     @app.post("/research/stream")
     def stream_research(payload: ResearchRequest) -> StreamingResponse:
         try:
-            config = _build_config(payload)
+            config = resolve_config(store, payload.model_profile_id, payload.search_api)
             agent = DeepResearchAgent(config=config)
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc

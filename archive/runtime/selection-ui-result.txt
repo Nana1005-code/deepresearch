@@ -1,0 +1,1 @@
+Highlight add/remove passed; selected text opened context chat.

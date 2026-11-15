@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "width": 1600,
+      "check": "issues jump scrolls only report",
+      "passed": true
+    },
+    {
+      "width": 1600,
+      "check": "references jump scrolls only report",
+      "passed": true
+    },
+    {
+      "width": 1600,
+      "check": "local graph has one outer scrollbar and reaches both ends",
+      "passed": true
+    },
+    {
+      "width": 1600,
+      "check": "local topic navigation resets outer scroll",
+      "passed": true
+    },
+    {
+      "width": 1600,
+      "check": "openalex graph has one outer scrollbar and reaches both ends",
+      "passed": true
+    },
+    {
+      "width": 1600,
+      "check": "openalex topic navigation resets outer scroll",
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "check": "issues jump scrolls only report",
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "check": "references jump scrolls only report",
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "check": "local graph has one outer scrollbar and reaches both ends",
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "check": "local topic navigation resets outer scroll",
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "check": "openalex graph has one outer scrollbar and reaches both ends",
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "check": "openalex topic navigation resets outer scroll",
+      "passed": true
+    }
+  ]
+}

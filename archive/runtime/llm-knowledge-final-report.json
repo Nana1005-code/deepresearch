@@ -1,0 +1,204 @@
+{
+  "baseline_works": 30318,
+  "total_works": 31141,
+  "nodes": [
+    {
+      "name": "大语言模型",
+      "papers": 1422
+    },
+    {
+      "name": "模型评测",
+      "papers": 709
+    },
+    {
+      "name": "多模态大模型",
+      "papers": 457
+    },
+    {
+      "name": "推理能力",
+      "papers": 347
+    },
+    {
+      "name": "医学大模型",
+      "papers": 195
+    },
+    {
+      "name": "幻觉缓解",
+      "papers": 170
+    },
+    {
+      "name": "幻觉检测",
+      "papers": 164
+    },
+    {
+      "name": "预训练",
+      "papers": 96
+    },
+    {
+      "name": "问答系统",
+      "papers": 89
+    },
+    {
+      "name": "偏好对齐",
+      "papers": 85
+    },
+    {
+      "name": "隐私保护",
+      "papers": 85
+    },
+    {
+      "name": "检索增强生成",
+      "papers": 82
+    },
+    {
+      "name": "不确定性与置信度",
+      "papers": 81
+    },
+    {
+      "name": "思维链",
+      "papers": 77
+    },
+    {
+      "name": "多语言模型",
+      "papers": 63
+    },
+    {
+      "name": "情感分析",
+      "papers": 63
+    },
+    {
+      "name": "具身智能",
+      "papers": 55
+    },
+    {
+      "name": "讽刺检测",
+      "papers": 51
+    },
+    {
+      "name": "智能体与工具调用",
+      "papers": 47
+    },
+    {
+      "name": "偏见与公平性",
+      "papers": 45
+    },
+    {
+      "name": "指令微调",
+      "papers": 44
+    },
+    {
+      "name": "文本摘要",
+      "papers": 44
+    },
+    {
+      "name": "模型安全与越狱",
+      "papers": 41
+    },
+    {
+      "name": "全模态大模型",
+      "papers": 40
+    },
+    {
+      "name": "模型量化",
+      "papers": 40
+    },
+    {
+      "name": "参数高效微调",
+      "papers": 38
+    },
+    {
+      "name": "语音识别",
+      "papers": 38
+    },
+    {
+      "name": "长上下文",
+      "papers": 37
+    },
+    {
+      "name": "视觉问答",
+      "papers": 35
+    },
+    {
+      "name": "命名实体识别",
+      "papers": 34
+    },
+    {
+      "name": "立场检测",
+      "papers": 34
+    },
+    {
+      "name": "视频理解",
+      "papers": 33
+    },
+    {
+      "name": "混合专家模型",
+      "papers": 30
+    },
+    {
+      "name": "关系抽取",
+      "papers": 30
+    },
+    {
+      "name": "语音合成",
+      "papers": 30
+    },
+    {
+      "name": "代码生成",
+      "papers": 29
+    },
+    {
+      "name": "知识蒸馏",
+      "papers": 29
+    },
+    {
+      "name": "机器翻译",
+      "papers": 29
+    },
+    {
+      "name": "文本分类",
+      "papers": 24
+    },
+    {
+      "name": "数学推理",
+      "papers": 21
+    },
+    {
+      "name": "视觉语言动作模型",
+      "papers": 20
+    },
+    {
+      "name": "视觉定位与指代",
+      "papers": 17
+    },
+    {
+      "name": "音频模型",
+      "papers": 15
+    },
+    {
+      "name": "多模态情绪识别",
+      "papers": 15
+    },
+    {
+      "name": "语音对话",
+      "papers": 14
+    },
+    {
+      "name": "图像描述",
+      "papers": 13
+    },
+    {
+      "name": "多模态检索",
+      "papers": 12
+    },
+    {
+      "name": "文档理解",
+      "papers": 8
+    },
+    {
+      "name": "音乐理解与生成",
+      "papers": 3
+    }
+  ],
+  "mapping_method": "题名与摘要术语证据；关系为论文共现",
+  "new_works": 823
+}
